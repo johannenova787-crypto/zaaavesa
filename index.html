@@ -2,167 +2,182 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Завеса в Мир Эни</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Завеса в Мир Эни</title>
 
-<!-- Волшебные шрифты -->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,600&family=Playfair+Display:ital,wght@0,600&display=swap" rel="stylesheet">
+<!-- Шрифты -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
   height: 100%;
-  background: radial-gradient(circle at top,
-    #f9f3e6 0%,
-    #efe4cf 40%,
-    #d8c9a8 100%);
+  background: radial-gradient(circle at top, #fff9ee 0%, #f3e6c8 60%, #e8d8b5 100%);
   overflow: hidden;
   font-family: 'Cormorant Garamond', serif;
 }
 
+/* Контейнер */
+.veil-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Ткань Завесы */
 .veil {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background:
     linear-gradient(120deg,
-      rgba(255,255,255,0.25),
-      rgba(255,240,210,0.15),
-      rgba(255,255,255,0.25));
-  animation: veilBreath 14s ease-in-out infinite;
+      rgba(255,255,255,0.35),
+      rgba(255,230,180,0.25),
+      rgba(255,255,255,0.35));
+  animation: veilFlow 18s ease-in-out infinite;
+  z-index: 1;
 }
 
-/* Золотые частицы */
-.particles {
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(circle, rgba(255,220,160,0.8) 1px, transparent 2px);
-  background-size: 120px 120px;
-  animation: floatParticles 40s linear infinite;
-  opacity: 0.4;
+@keyframes veilFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Экран входа */
+/* Центральный блок */
 .portal {
   position: relative;
-  z-index: 3;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  z-index: 2;
   text-align: center;
+  padding: 40px;
 }
 
 /* Заголовок */
-.veil-title {
-  font-size: clamp(52px, 7vw, 98px);
-  letter-spacing: 0.08em;
- color: #f5e6c8;
+.portal-title {
+  font-size: clamp(56px, 8vw, 110px);
+  letter-spacing: 0.12em;
+  color: #c9a14a;
+  margin-bottom: 40px;
   text-shadow:
-    0 0 6px rgba(255,220,170,0.5),
-    0 0 18px rgba(255,210,160,0.4);
+    0 0 4px rgba(255,215,150,0.45),
+    0 0 10px rgba(255,200,120,0.25);
+  animation: titleBreath 7s ease-in-out infinite;
 }
-  animation: titleGlow 6s ease-in-out infinite;
-  margin-bottom: 30px;
+
+@keyframes titleBreath {
+  0%,100% { opacity: 0.95; }
+  50% { opacity: 1; }
 }
 
 /* Кнопка */
-.open-btn {
-  font-size: 22px;
-  padding: 16px 36px;
-  border-radius: 40px;
-  border: 1px solid rgba(255,220,170,0.6);
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(6px);
+.open-button {
+  font-size: 26px;
+  letter-spacing: 0.15em;
+  padding: 18px 46px;
+  border-radius: 60px;
+  border: 1px solid rgba(200,160,80,0.6);
+  background: rgba(255,245,220,0.65);
+  color: #9c7a2f;
   cursor: pointer;
-  color: #6a5432;
-  transition: all 0.8s ease;
+  transition: all 0.6s ease;
+  box-shadow: 0 0 18px rgba(255,210,140,0.35);
 }
 
-.open-btn:hover {
-  background: rgba(255,240,210,0.6);
-  box-shadow: 0 0 25px rgba(255,210,160,0.7);
+.open-button:hover {
+  box-shadow: 0 0 30px rgba(255,220,160,0.7);
+  transform: scale(1.04);
 }
 
-/* Шёпот */
+/* Подпись-шёпот */
 .whisper {
-  margin-top: 40px;
-  font-style: italic;
+  margin-top: 26px;
   font-size: 18px;
-  color: rgba(90,70,40,0.7);
+  letter-spacing: 0.12em;
+  color: rgba(140,110,60,0.85);
   opacity: 0;
-  animation: whisperFade 6s ease-in-out infinite;
+  animation: whisperAppear 6s ease forwards;
+  animation-delay: 2s;
 }
 
-/* Анимации */
-@keyframes veilBreath {
-  0% { opacity: 0.85; }
-  50% { opacity: 1; }
-  100% { opacity: 0.85; }
+@keyframes whisperAppear {
+  to { opacity: 1; }
 }
 
-@keyframes floatParticles {
-  from { background-position: 0 0; }
-  to { background-position: 0 -2000px; }
-}
-
-@keyframes titleGlow {
-  0% {
-    opacity: 0.85;
-    text-shadow: 0 0 12px rgba(255,220,170,0.4);
-  }
-  50% {
-    opacity: 1;
-    text-shadow:
-      0 0 20px rgba(255,230,190,0.9),
-      0 0 60px rgba(255,210,160,0.6);
-  }
-  100% {
-    opacity: 0.85;
-    text-shadow: 0 0 12px rgba(255,220,170,0.4);
-  }
-}
-
-@keyframes whisperFade {
-  0%,100% { opacity: 0; }
-  50% { opacity: 1; }
+/* Частицы */
+canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 </style>
 </head>
 
 <body>
 
-<div class="veil"></div>
-<div class="particles"></div>
+<div class="veil-container">
+  <canvas id="particles"></canvas>
+  <div class="veil"></div>
 
-<div class="portal">
-  <h1 class="veil-title">Завеса в Мир Эни</h1>
-
-  <button class="open-btn"
-    onclick="enterWorld()">
-    Открыть
-  </button>
-
-  <div class="whisper">
-    Пусть звучит и раскрывается,<br>
-    где бы ты ни был…
+  <div class="portal">
+    <div class="portal-title">Завеса в Мир Эни</div>
+    <button class="open-button" onclick="enterWorld()">Открыть</button>
+    <div class="whisper">
+      Пусть звучит и раскрывается,<br>
+      где бы ты ни был…
+    </div>
   </div>
 </div>
 
 <script>
+/* Переход */
 function enterWorld() {
   document.body.style.transition = "opacity 2s ease";
   document.body.style.opacity = "0";
   setTimeout(() => {
-    window.location.href = "home.html";
+    window.location.href = "home.html"; // следующая страница
   }, 2000);
 }
+
+/* Золотые частицы */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+let particles = [];
+for (let i = 0; i < 120; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.8 + 0.6,
+    v: Math.random() * 0.3 + 0.1,
+    a: Math.random() * Math.PI * 2
+  });
+}
+
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p => {
+    p.y -= p.v;
+    p.a += 0.01;
+    if (p.y < -10) p.y = canvas.height + 10;
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(210,170,90,0.6)";
+    ctx.arc(p.x + Math.sin(p.a)*4, p.y, p.r, 0, Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
 </script>
 
 </body>
 </html>
-Update veil title style
