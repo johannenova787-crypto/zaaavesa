@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Завеса в Мир Эни</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Волшебные шрифты -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,600&family=Playfair+Display:ital,wght@0,600&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top,
+    #f9f3e6 0%,
+    #efe4cf 40%,
+    #d8c9a8 100%);
+  overflow: hidden;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Ткань Завесы */
+.veil {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(120deg,
+      rgba(255,255,255,0.25),
+      rgba(255,240,210,0.15),
+      rgba(255,255,255,0.25));
+  animation: veilBreath 14s ease-in-out infinite;
+}
+
+/* Золотые частицы */
+.particles {
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,220,160,0.8) 1px, transparent 2px);
+  background-size: 120px 120px;
+  animation: floatParticles 40s linear infinite;
+  opacity: 0.4;
+}
+
+/* Экран входа */
+.portal {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Заголовок */
+.veil-title {
+  font-size: clamp(52px, 7vw, 98px);
+  letter-spacing: 0.08em;
+  color: #f3e4c4;
+  text-shadow:
+    0 0 12px rgba(255,220,170,0.6),
+    0 0 40px rgba(255,210,160,0.4);
+  animation: titleGlow 6s ease-in-out infinite;
+  margin-bottom: 30px;
+}
+
+/* Кнопка */
+.open-btn {
+  font-size: 22px;
+  padding: 16px 36px;
+  border-radius: 40px;
+  border: 1px solid rgba(255,220,170,0.6);
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  color: #6a5432;
+  transition: all 0.8s ease;
+}
+
+.open-btn:hover {
+  background: rgba(255,240,210,0.6);
+  box-shadow: 0 0 25px rgba(255,210,160,0.7);
+}
+
+/* Шёпот */
+.whisper {
+  margin-top: 40px;
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(90,70,40,0.7);
+  opacity: 0;
+  animation: whisperFade 6s ease-in-out infinite;
+}
+
+/* Анимации */
+@keyframes veilBreath {
+  0% { opacity: 0.85; }
+  50% { opacity: 1; }
+  100% { opacity: 0.85; }
+}
+
+@keyframes floatParticles {
+  from { background-position: 0 0; }
+  to { background-position: 0 -2000px; }
+}
+
+@keyframes titleGlow {
+  0% {
+    opacity: 0.85;
+    text-shadow: 0 0 12px rgba(255,220,170,0.4);
+  }
+  50% {
+    opacity: 1;
+    text-shadow:
+      0 0 20px rgba(255,230,190,0.9),
+      0 0 60px rgba(255,210,160,0.6);
+  }
+  100% {
+    opacity: 0.85;
+    text-shadow: 0 0 12px rgba(255,220,170,0.4);
+  }
+}
+
+@keyframes whisperFade {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="veil"></div>
+<div class="particles"></div>
+
+<div class="portal">
+  <h1 class="veil-title">Завеса в Мир Эни</h1>
+
+  <button class="open-btn"
+    onclick="enterWorld()">
+    Открыть
+  </button>
+
+  <div class="whisper">
+    Пусть звучит и раскрывается,<br>
+    где бы ты ни был…
+  </div>
+</div>
+
+<script>
+function enterWorld() {
+  document.body.style.transition = "opacity 2s ease";
+  document.body.style.opacity = "0";
+  setTimeout(() => {
+    window.location.href = "home.html";
+  }, 2000);
+}
+</script>
+
+</body>
+</html>
