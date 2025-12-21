@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Завеса в Мир Эни</title>
 
-<!-- Шрифты -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -54,15 +55,21 @@ html, body {
   padding: 40px;
 }
 
+/* ОБЩИЙ ЗОЛОТОЙ СВЕТ */
+:root {
+  --gold: rgba(201,161,74,1);
+  --gold-glow: rgba(255,215,150,0.45);
+}
+
 /* Заголовок */
 .portal-title {
-  font-size: clamp(48px, 6.5vw, 92px);
-  letter-spacing: 0.12em;
-  color: #c9a14a;
-  margin-bottom: 40px;
+  font-size: clamp(52px, 6vw, 88px);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin-bottom: 36px;
   text-shadow:
-    0 0 4px rgba(255,215,150,0.45),
-    0 0 10px rgba(255,200,120,0.25);
+    0 0 6px var(--gold-glow),
+    0 0 14px rgba(255,200,120,0.35);
   animation: titleBreath 7s ease-in-out infinite;
 }
 
@@ -90,20 +97,18 @@ html, body {
   transform: scale(1.04);
 }
 
-/* Подпись-шёпот */
+/* Шёпот */
 .whisper {
-  font-size: 40px !important;
-  color: rgba(140,110,60,0.85)!important;
-  margin-top: 28px;  
-
-}
+  margin-top: 30px;
+  font-size: 44px;
   letter-spacing: 0.14em;
-  color: rgba(140,110,60,0.9);
+  color: var(--gold);
   opacity: 0;
+  text-shadow:
+    0 0 6px rgba(255,215,150,0.35);
   animation: whisperAppear 6s ease forwards;
   animation-delay: 2s;
 }
-
 
 @keyframes whisperAppear {
   to { opacity: 1; }
@@ -135,16 +140,15 @@ canvas {
 </div>
 
 <script>
-/* Переход */
 function enterWorld() {
   document.body.style.transition = "opacity 2s ease";
   document.body.style.opacity = "0";
   setTimeout(() => {
-    window.location.href = "home.html"; // следующая страница
+    window.location.href = "home.html";
   }, 2000);
 }
 
-/* Золотые частицы */
+/* Частицы */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 
@@ -185,5 +189,3 @@ draw();
 
 </body>
 </html>
-Adjust title and whisper sizes
-
