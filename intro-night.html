@@ -143,10 +143,9 @@ canvas {
     Ты уже знаешь этот путь.
   </div>
 
-<button class="open-button" onclick="goNight()">
-  Нырнуть глубже в мир Эни
-</button>
-
+  <button class="enter" onclick="goDeeper()">
+    Нырнуть глубже
+  </button>
 </div>
 
 <script>
@@ -193,16 +192,9 @@ function drawStars() {
 }
 drawStars();
 </script>
-<script>
-function goNight() {
-  document.body.style.transition = "opacity 2.5s ease";
-  document.body.style.opacity = "0";
-  setTimeout(() => {
-    window.location.href = "intro-night.html";
-  }, 2500);
-}
-</script>
+
 </body>
 </html>
+
 
 
