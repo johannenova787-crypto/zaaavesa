@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,12 +12,11 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: radial-gradient(circle at top, #fff9ee 0%, #f3e6c8 60%, #e8d8b5 100%);
+  background: radial-gradient(circle at top, #fffaf0, #f2e3c6);
   overflow: hidden;
   font-family: 'Cormorant Garamond', serif;
 }
 
-/* Контейнер */
 .veil-container {
   position: relative;
   height: 100%;
@@ -28,17 +25,23 @@ html, body {
   justify-content: center;
 }
 
-/* Ткань Завесы */
+/* Завеса */
 .veil {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(120deg,
-      rgba(255,255,255,0.35),
-      rgba(255,230,180,0.25),
-      rgba(255,255,255,0.35));
+      rgba(255,255,255,0.45),
+      rgba(255,225,170,0.25),
+      rgba(255,255,255,0.45));
   animation: veilFlow 18s ease-in-out infinite;
-  z-index: 1;
+  z-index: 2;
+  transition: transform 3s ease, opacity 3s ease;
+}
+
+.veil.open {
+  transform: scaleX(0);
+  opacity: 0;
 }
 
 @keyframes veilFlow {
@@ -47,65 +50,28 @@ html, body {
   100% { background-position: 0% 50%; }
 }
 
-/* Центральный блок */
 .portal {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   text-align: center;
-  padding: 40px;
 }
 
-/* ОБЩИЙ ЗОЛОТОЙ СВЕТ */
-:root {
-  --gold: rgba(201,161,74,1);
-  --gold-glow: rgba(255,215,150,0.45);
-}
-
-/* Заголовок */
 .portal-title {
   font-size: clamp(52px, 6vw, 88px);
   letter-spacing: 0.14em;
-  color: var(--gold);
-  margin-bottom: 36px;
+  color: #c9a14a;
   text-shadow:
-    0 0 6px var(--gold-glow),
-    0 0 14px rgba(255,200,120,0.35);
-  animation: titleBreath 7s ease-in-out infinite;
+    0 0 10px rgba(255,215,150,0.5),
+    0 0 22px rgba(255,200,120,0.35);
+  margin-bottom: 40px;
 }
 
-@keyframes titleBreath {
-  0%,100% { opacity: 0.95; }
-  50% { opacity: 1; }
-}
-
-/* Кнопка */
-.open-button {
-  font-size: 26px;
-  letter-spacing: 0.15em;
-  padding: 18px 46px;
-  border-radius: 60px;
-  border: 1px solid rgba(200,160,80,0.6);
-  background: rgba(255,245,220,0.65);
-  color: #9c7a2f;
-  cursor: pointer;
-  transition: all 0.6s ease;
-  box-shadow: 0 0 18px rgba(255,210,140,0.35);
-}
-
-.open-button:hover {
-  box-shadow: 0 0 30px rgba(255,220,160,0.7);
-  transform: scale(1.04);
-}
-
-/* Шёпот */
 .whisper {
-  margin-top: 30px;
+  margin-top: 34px;
   font-size: 44px;
   letter-spacing: 0.14em;
-  color: var(--gold);
+  color: #c9a14a;
   opacity: 0;
-  text-shadow:
-    0 0 6px rgba(255,215,150,0.35);
   animation: whisperAppear 6s ease forwards;
   animation-delay: 2s;
 }
@@ -114,24 +80,43 @@ html, body {
   to { opacity: 1; }
 }
 
+.open-button {
+  font-size: 26px;
+  letter-spacing: 0.15em;
+  padding: 18px 48px;
+  border-radius: 60px;
+  border: 1px solid rgba(200,160,80,0.6);
+  background: rgba(255,245,220,0.7);
+  color: #9c7a2f;
+  cursor: pointer;
+  transition: all 0.6s ease;
+}
+
+.open-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255,220,160,0.7);
+}
+
 /* Частицы */
 canvas {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
 }
 </style>
 </head>
 
 <body>
 
+<audio id="veilSound" src="sound/veil.mp3" preload="auto"></audio>
+
 <div class="veil-container">
   <canvas id="particles"></canvas>
-  <div class="veil"></div>
+  <div class="veil" id="veil"></div>
 
   <div class="portal">
     <div class="portal-title">Завеса в Мир Эни</div>
-    <button class="open-button" onclick="enterWorld()">Открыть</button>
+    <button class="open-button" onclick="openVeil()">Открыть</button>
     <div class="whisper">
       Пусть звучит и раскрывается,<br>
       где бы ты ни был…
@@ -140,12 +125,23 @@ canvas {
 </div>
 
 <script>
-function enterWorld() {
-  document.body.style.transition = "opacity 2s ease";
-  document.body.style.opacity = "0";
+const sound = document.getElementById('veilSound');
+const veil = document.getElementById('veil');
+
+function openVeil() {
+  sound.volume = 0.8;
+  sound.play();
+
+  veil.classList.add('open');
+
+  setTimeout(() => {
+    document.body.style.transition = "opacity 2.5s ease";
+    document.body.style.opacity = "0";
+  }, 2500);
+
   setTimeout(() => {
     window.location.href = "home.html";
-  }, 2000);
+  }, 5000);
 }
 
 /* Частицы */
@@ -176,7 +172,6 @@ function draw() {
     p.y -= p.v;
     p.a += 0.01;
     if (p.y < -10) p.y = canvas.height + 10;
-
     ctx.beginPath();
     ctx.fillStyle = "rgba(210,170,90,0.6)";
     ctx.arc(p.x + Math.sin(p.a)*4, p.y, p.r, 0, Math.PI*2);
