@@ -1,27 +1,109 @@
-<script>
-let nightOpened = false;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Эни — Сквозь Тени</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-// 🌗 ожидание
-const waitTimer = setTimeout(() => {
-  if (!nightOpened) enterNight();
-}, 12000);
+  <link rel="stylesheet" href="style.css">
 
-// 🜂 жест
-document.addEventListener("mousemove", awaken);
-document.addEventListener("touchstart", awaken);
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at top, #1a1a2a, #050510);
+      color: #f5f1e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Georgia", serif;
+      overflow: hidden;
+    }
 
-function awaken() {
-  if (!nightOpened) {
-    clearTimeout(waitTimer);
-    enterNight();
-  }
-}
+    .intro {
+      text-align: center;
+      max-width: 720px;
+      opacity: 0;
+      animation: appear 4s ease forwards;
+    }
 
-function enterNight() {
-  nightOpened = true;
-  document.body.classList.add("fade-to-night");
-  setTimeout(() => {
-    window.location.href = "intro-night.html";
-  }, 2500);
-}
-</script>
+    @keyframes appear {
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: normal;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.2rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      margin-bottom: 3rem;
+    }
+
+    .dive {
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 40px;
+      text-decoration: none;
+      color: #f5f1e8;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      transition: all 0.6s ease;
+    }
+
+    .dive:hover {
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 25px rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="intro">
+    <h1>Джоанна Нова</h1>
+    <div class="subtitle">
+      Эни · Акт I<br>
+      Сквозь Тени
+    </div>
+
+    <a href="gallery.html" class="dive">
+      Нырнуть глубже в Мир Эни
+    </a>
+  </div>
+
+  <!-- 🌗 НОЧНОЙ ПЕРЕХОД -->
+  <script>
+    let nightOpened = false;
+
+    const waitTimer = setTimeout(() => {
+      if (!nightOpened) enterNight();
+    }, 12000);
+
+    document.addEventListener("mousemove", awaken);
+    document.addEventListener("touchstart", awaken);
+
+    function awaken() {
+      if (!nightOpened) {
+        clearTimeout(waitTimer);
+        enterNight();
+      }
+    }
+
+    function enterNight() {
+      nightOpened = true;
+      document.body.style.transition = "opacity 2.5s ease";
+      document.body.style.opacity = "0";
+      setTimeout(() => {
+        window.location.href = "intro-night.html";
+      }, 2500);
+    }
+  </script>
+
+</body>
+</html>
