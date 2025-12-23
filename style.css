@@ -1,0 +1,198 @@
+/* ======================================
+   ОСНОВА
+====================================== */
+
+:root {
+  --gold-day: #d6b56d;
+  --gold-sunset: #c9a14a;
+  --gold-night: #9e8acb;
+
+  --bg-day: radial-gradient(circle at top, #fff9ee 0%, #f3e6c8 60%, #e8d8b5 100%);
+  --bg-sunset: radial-gradient(circle at top, #ffe8c2 0%, #e8cfa2 55%, #caa86a 100%);
+  --bg-night: radial-gradient(circle at top, #1b1f3b 0%, #0f1224 70%, #080912 100%);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Cormorant Garamond', serif;
+  overflow: hidden;
+}
+
+/* ======================================
+   РЕЖИМЫ: день / закат / ночь
+   body получает класс: day | sunset | night
+====================================== */
+
+body.day {
+  background: var(--bg-day);
+  color: #6a5325;
+}
+
+body.sunset {
+  background: var(--bg-sunset);
+  color: #5c4318;
+}
+
+body.night {
+  background: var(--bg-night);
+  color: #cfc9ff;
+}
+
+/* ======================================
+   КОНТЕЙНЕР ЗАВЕСЫ
+====================================== */
+
+.veil-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ткань Завесы */
+.veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.25),
+    rgba(255,215,160,0.18),
+    rgba(255,255,255,0.25)
+  );
+  animation: veilFlow 18s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes veilFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ======================================
+   ЦЕНТРАЛЬНЫЙ ПОРТАЛ
+====================================== */
+
+.portal {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+}
+
+/* ======================================
+   ЗАГОЛОВОК «ЗАВЕСА В МИР ЭНИ»
+====================================== */
+
+.portal-title {
+  font-size: clamp(52px, 6vw, 88px);
+  letter-spacing: 0.14em;
+  margin-bottom: 36px;
+  animation: titleBreath 7s ease-in-out infinite;
+}
+
+/* Цвет заголовка по режимам */
+body.day .portal-title {
+  color: var(--gold-day);
+  text-shadow: 0 0 6px rgba(255,215,150,0.4);
+}
+
+body.sunset .portal-title {
+  color: var(--gold-sunset);
+  text-shadow: 0 0 10px rgba(255,200,120,0.45);
+}
+
+body.night .portal-title {
+  color: var(--gold-night);
+  text-shadow: 0 0 14px rgba(180,160,255,0.55);
+}
+
+@keyframes titleBreath {
+  0%,100% { opacity: 0.92; }
+  50% { opacity: 1; }
+}
+
+/* ======================================
+   КНОПКА ОТКРЫТИЯ
+====================================== */
+
+.open-button {
+  font-size: 24px;
+  letter-spacing: 0.16em;
+  padding: 18px 46px;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.6s ease;
+  background: rgba(255,245,220,0.6);
+}
+
+body.day .open-button,
+body.sunset .open-button {
+  color: #9c7a2f;
+  border: 1px solid rgba(200,160,80,0.6);
+  box-shadow: 0 0 18px rgba(255,210,140,0.35);
+}
+
+body.night .open-button {
+  color: #d6ccff;
+  border: 1px solid rgba(160,150,255,0.5);
+  background: rgba(40,40,80,0.6);
+  box-shadow: 0 0 20px rgba(140,130,255,0.4);
+}
+
+.open-button:hover {
+  transform: scale(1.05);
+}
+
+/* ======================================
+   ШЁПОТ «ПУСТЬ ЗВУЧИТ И РАСКРЫВАЕТСЯ»
+====================================== */
+
+.whisper {
+  margin-top: 26px;
+  font-size: 32px;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  animation: whisperAppear 6s ease forwards;
+  animation-delay: 2s;
+}
+
+body.day .whisper,
+body.sunset .whisper {
+  color: var(--gold-day);
+}
+
+body.night .whisper {
+  color: #b8b0ff;
+}
+
+@keyframes whisperAppear {
+  to { opacity: 1; }
+}
+
+/* ======================================
+   ЧАСТИЦЫ
+====================================== */
+
+canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ======================================
+   МЕДЛЕННЫЙ ЗАКАТ → НОЧЬ (опционально)
+====================================== */
+
+body.transition-to-night {
+  animation: sunsetToNight 20s ease forwards;
+}
+
+@keyframes sunsetToNight {
+  0% { background: var(--bg-sunset); }
+  100% { background: var(--bg-night); }
+}
