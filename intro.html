@@ -1,0 +1,27 @@
+<script>
+let nightOpened = false;
+
+// 🌗 ожидание
+const waitTimer = setTimeout(() => {
+  if (!nightOpened) enterNight();
+}, 12000);
+
+// 🜂 жест
+document.addEventListener("mousemove", awaken);
+document.addEventListener("touchstart", awaken);
+
+function awaken() {
+  if (!nightOpened) {
+    clearTimeout(waitTimer);
+    enterNight();
+  }
+}
+
+function enterNight() {
+  nightOpened = true;
+  document.body.classList.add("fade-to-night");
+  setTimeout(() => {
+    window.location.href = "intro-night.html";
+  }, 2500);
+}
+</script>
