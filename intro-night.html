@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Завеса • Ночная</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Cormorant Garamond', serif;
+  background:
+    radial-gradient(circle at top,
+      #1a2236 0%,
+      #0f1626 45%,
+      #080c16 100%);
+  color: #e6e2d8;
+  overflow: hidden;
+}
+
+/* Мягкое ночное дыхание */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%,
+      rgba(120,140,255,0.12),
+      transparent 60%),
+    radial-gradient(circle at 70% 80%,
+      rgba(200,180,255,0.08),
+      transparent 55%);
+  animation: nightBreath 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes nightBreath {
+  0%,100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Контейнер */
+.intro {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  z-index: 2;
+}
+
+/* Имя и книга */
+.title {
+  font-size: clamp(36px, 5vw, 68px);
+  letter-spacing: 0.12em;
+  color: #d6d2ff;
+  text-shadow:
+    0 0 10px rgba(170,160,255,0.35),
+    0 0 24px rgba(120,110,220,0.25);
+  margin-bottom: 26px;
+  animation: glowSlow 8s ease-in-out infinite;
+}
+
+.subtitle {
+  font-size: clamp(20px, 2.5vw, 30px);
+  letter-spacing: 0.18em;
+  color: rgba(220,215,255,0.8);
+  margin-bottom: 48px;
+}
+
+/* Шёпот */
+.whisper {
+  font-size: clamp(18px, 2.2vw, 24px);
+  letter-spacing: 0.12em;
+  color: rgba(200,200,230,0.7);
+  max-width: 680px;
+  line-height: 1.7;
+  opacity: 0;
+  animation: whisperIn 6s ease forwards;
+  animation-delay: 2s;
+  margin-bottom: 56px;
+}
+
+@keyframes whisperIn {
+  to { opacity: 1; }
+}
+
+/* Кнопка-переход */
+.enter {
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  padding: 16px 48px;
+  border-radius: 60px;
+  border: 1px solid rgba(160,150,255,0.45);
+  background: rgba(30,35,70,0.45);
+  color: #e8e6ff;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.6s ease;
+  box-shadow:
+    0 0 18px rgba(130,120,255,0.35);
+}
+
+.enter:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 30px rgba(170,160,255,0.6);
+}
+
+/* Медленное свечение */
+@keyframes glowSlow {
+  0%,100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* Звёздные частицы */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="intro">
+  <div class="title">Джоанна Нова</div>
+  <div class="subtitle">Эни • Акт I • Сквозь Тени</div>
+
+  <div class="whisper">
+    Здесь не нужно спешить.<br>
+    Некоторые миры открываются только ночью.<br>
+    Ты уже знаешь этот путь.
+  </div>
+
+  <button class="enter" onclick="goDeeper()">
+    Нырнуть глубже
+  </button>
+</div>
+
+<script>
+function goDeeper() {
+  document.body.style.transition = "opacity 2.5s ease";
+  document.body.style.opacity = "0";
+  setTimeout(() => {
+    window.location.href = "gallery.html";
+  }, 2500);
+}
+
+/* Звёзды */
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+let stars = [];
+for (let i = 0; i < 140; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.2 + 0.3,
+    v: Math.random() * 0.15 + 0.05
+  });
+}
+
+function drawStars() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    s.y += s.v;
+    if (s.y > canvas.height) s.y = -10;
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(200,200,255,0.6)";
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+</script>
+
+</body>
+</html>
