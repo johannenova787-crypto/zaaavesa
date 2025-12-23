@@ -1,1 +1,198 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Джоанна Нова • Эни — Акт I</title>
+
+<!-- Шрифт -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Cormorant Garamond', serif;
+  background: radial-gradient(circle at top, #fffdf8 0%, #f2ead9 60%, #e6dbc3 100%);
+  overflow: hidden;
+}
+
+/* Контейнер дыхания */
+.intro-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Мягкое дыхание фона */
+.intro-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.25),
+    rgba(255,240,210,0.25),
+    rgba(255,255,255,0.25)
+  );
+  animation: breath 20s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes breath {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+  100% { opacity: 0.6; }
+}
+
+/* Контент */
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+/* Имя автора */
+.author {
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  color: rgba(120, 95, 50, 0.8);
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: appear 3s ease forwards;
+}
+
+/* Эни */
+.eni {
+  font-size: 42px;
+  margin-bottom: 20px;
+  color: #8f6e2c;
+  opacity: 0;
+  animation: appear 3s ease forwards;
+  animation-delay: 1.5s;
+}
+
+/* Текст-узнавание */
+.recognition {
+  font-size: 22px;
+  line-height: 1.6;
+  color: rgba(90, 70, 35, 0.9);
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: appear 3s ease forwards;
+  animation-delay: 3s;
+}
+
+/* Название книги */
+.book-title {
+  font-size: 38px;
+  letter-spacing: 0.12em;
+  color: #b8943f;
+  margin-bottom: 40px;
+  text-shadow:
+    0 0 6px rgba(255,215,150,0.35),
+    0 0 14px rgba(255,200,120,0.25);
+  opacity: 0;
+  animation: appear 3s ease forwards;
+  animation-delay: 4.5s;
+}
+
+/* Приглашение */
+.invite {
+  margin-top: 60px;
+  opacity: 0;
+  animation: appear 3s ease forwards;
+  animation-delay: 6s;
+}
+
+.invite button {
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  padding: 16px 44px;
+  border-radius: 50px;
+  border: 1px solid rgba(180,140,60,0.6);
+  background: rgba(255,245,220,0.7);
+  color: #7a5a1e;
+  cursor: pointer;
+  transition: all 0.6s ease;
+  box-shadow: 0 0 20px rgba(255,215,150,0.4);
+}
+
+.invite button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 34px rgba(255,225,170,0.7);
+}
+
+/* Шёпот */
+.whisper {
+  font-size: 18px;
+  margin-top: 18px;
+  color: rgba(120, 100, 60, 0.7);
+  letter-spacing: 0.08em;
+}
+
+/* Анимация появления */
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="intro-container">
+  <div class="content">
+
+    <div class="author">
+      ДЖОАННА НОВА
+    </div>
+
+    <div class="eni">
+      Эни —
+    </div>
+
+    <div class="recognition">
+      это имя я дала той,<br>
+      кто смогла пройти<br>
+      и не отвернуться.
+    </div>
+
+    <div class="book-title">
+      АКТ I<br>
+      СКВОЗЬ ТЕНИ
+    </div>
+
+    <div class="invite">
+      <button onclick="goDeeper()">Нырнуть глубже в Мир Эни</button>
+      <div class="whisper">
+        если ты готов идти не сразу
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function goDeeper() {
+  document.body.style.transition = "opacity 2s ease";
+  document.body.style.opacity = "0";
+  setTimeout(() => {
+    window.location.href = "gallery.html";
+  }, 2000);
+}
+</script>
+
+</body>
+</html>
