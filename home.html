@@ -1,93 +1,132 @@
-<body class="house">
 
-  <div class="veil"></div>
 
-  <div class="room">
-    <h1 class="title">Дом Благоразумия</h1>
-    
 
-    <p class="whisper">
-      Ты можешь идти.
-    </p>
-
-    <div class="doors">
-      <a href="eni.html" class="door">Комната Эни</a>
-      <a href="world.html" class="door">Дальше</a>
-    </div>
-  </div>
-
-<script src="house.js"></script>
-</body>
-
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Дом Благоразумия</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дом Благоразумия</title>
 
-  <style>
-body.house {
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+html, body {
   margin: 0;
-  height: 100vh;
-  background: radial-gradient(circle at top, #f6eedc, #e4d3ad);
+  padding: 0;
+  height: 100%;
   font-family: 'Cormorant Garamond', serif;
-  transition: background 4s ease;
+  background: radial-gradient(circle at center, #1f1b16 0%, #12100d 70%, #0a0907 100%);
+  color: rgba(230,210,170,0.9);
+  overflow: hidden;
 }
 
-.veil {
-  position: fixed;
+/* Дом */
+.house {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Дыхание Дома */
+.house::before {
+  content: "";
+  position: absolute;
   inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0.25),
-    rgba(220,190,120,0.15),
-    rgba(255,255,255,0.25)
-  );
-  animation: veilBreath 16s ease-in-out infinite;
-  pointer-events: none;
+  background:
+    radial-gradient(circle at top,
+      rgba(120,100,60,0.15),
+      rgba(0,0,0,0.8));
+  animation: houseBreath 16s ease-in-out infinite;
 }
 
-@keyframes veilBreath {
-  0%,100% { opacity: 0.6; }
-  50% { opacity: 0.85; }
+@keyframes houseBreath {
+  0%,100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
-.room {
+/* Центр */
+.center {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding-top: 20vh;
 }
 
+/* Название */
 .title {
-  font-size: 64px;
-  color: #b8953a;
+  font-size: clamp(40px, 5vw, 72px);
   letter-spacing: 0.12em;
+  margin-bottom: 60px;
+  color: rgba(210,180,120,0.85);
 }
 
+/* Кольцо дверей */
+.doors {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Дверь */
+.door {
+  padding: 18px 28px;
+  border: 1px solid rgba(180,150,90,0.4);
+  border-radius: 40px;
+  text-decoration: none;
+  color: rgba(220,200,160,0.8);
+  letter-spacing: 0.14em;
+  transition: all 0.5s ease;
+  background: rgba(40,30,20,0.3);
+}
+
+.door:hover {
+  box-shadow: 0 0 25px rgba(200,170,100,0.5);
+  transform: scale(1.05);
+  color: rgba(255,230,180,0.95);
+}
+
+/* Шёпот Дома */
 .whisper {
-  margin-top: 30px;
-  font-size: 26px;
-  opacity: 0.7;
-  transition: opacity 3s ease, color 3s ease;
+  margin-top: 70px;
+  font-size: 18px;
+  letter-spacing: 0.16em;
+  color: rgba(140,120,90,0.6);
+  opacity: 0;
+  animation: whisperAppear 5s ease forwards;
+  animation-delay: 3s;
 }
 
-/* 🌑 ВЕРСИЯ ДЛЯ ТЕХ, КТО ОСТАЛСЯ */
-body.linger {
-  background: radial-gradient(circle at top, #e9dcc0, #c9b07a);
+@keyframes whisperAppear {
+  to { opacity: 1; }
 }
-
-body.linger .veil {
-  opacity: 1;
-}
-
-body.linger .whisper {
-  opacity: 1;
-  color: #7a5a2a;
-}
-
-  </style>
+</style>
 </head>
-<a href="eni.html">ТЕСТ: открыть Эни</a>
 
+<body>
 
+<div class="house">
+  <div class="center">
 
+    <div class="title">Дом Благоразумия</div>
 
+    <div class="doors">
+      <a class="door" href="eni.html">Эни</a>
+      <a class="door" href="eni-night.html">Эни · Ночь</a>
+      <a class="door" href="#">Анджелика</a>
+      <a class="door" href="#">Джереми</a>
+      <a class="door" href="#">Кот</a>
+    </div>
+
+    <div class="whisper">
+      Здесь легко остаться.<br>
+      Сложнее — уйти вовремя.
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
