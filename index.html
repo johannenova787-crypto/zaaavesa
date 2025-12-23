@@ -197,3 +197,22 @@ setTimeout(() => {
   }, 3000);
 }, 18000); // 18 секунд ожидания
 </script>
+
+
+<script>
+let hoverTimer;
+
+document.querySelector('.portal-title').addEventListener('mouseenter', () => {
+  hoverTimer = setTimeout(() => {
+    document.body.style.opacity = "0";
+    setTimeout(() => {
+      window.location.href = "intro-night.html";
+    }, 2500);
+  }, 4000); // 4 секунды неподвижного взгляда
+});
+
+document.querySelector('.portal-title').addEventListener('mouseleave', () => {
+  clearTimeout(hoverTimer);
+});
+</script>
+
