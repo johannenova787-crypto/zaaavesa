@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Комната Эни</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Cormorant Garamond', serif;
+  background: radial-gradient(circle at top, #fffdf8 0%, #f1e7d3 60%, #e6d6b2 100%);
+  overflow-x: hidden;
+}
+
+/* Общий контейнер */
+.room {
+  min-height: 100vh;
+  padding: 10vh 10vw;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Дыхание света */
+.room::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg,
+      rgba(255,255,255,0.35),
+      rgba(255,235,200,0.25),
+      rgba(255,255,255,0.35));
+  animation: veilBreath 18s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes veilBreath {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.85; }
+  100% { opacity: 0.6; }
+}
+
+/* Контент */
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+/* Имя */
+.name {
+  font-size: clamp(56px, 7vw, 96px);
+  letter-spacing: 0.08em;
+  color: #c8a85a;
+  text-shadow:
+    0 0 6px rgba(255,220,150,0.4),
+    0 0 14px rgba(255,200,120,0.25);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: appear 3s ease forwards;
+}
+
+/* Текст */
+.text {
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.6;
+  color: rgba(90,70,40,0.9);
+  max-width: 700px;
+  opacity: 0;
+  animation: appear 4s ease forwards;
+  animation-delay: 1.2s;
+}
+
+/* Тихая фраза */
+.whisper {
+  margin-top: 60px;
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: rgba(140,120,90,0.7);
+  opacity: 0;
+  animation: appear 4s ease forwards;
+  animation-delay: 3s;
+}
+
+/* Назад */
+.back {
+  margin-top: 90px;
+  display: inline-block;
+  font-size: 18px;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  color: rgba(120,100,70,0.7);
+  border-bottom: 1px solid rgba(120,100,70,0.3);
+  transition: all 0.4s ease;
+}
+
+.back:hover {
+  color: rgba(160,130,80,0.9);
+  border-color: rgba(160,130,80,0.6);
+}
+
+/* Появление */
+@keyframes appear {
+  to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="room">
+  <div class="content">
+
+    <div class="name">Эни</div>
+
+    <div class="text">
+      Она не искала путь —  
+      она просто перестала соглашаться с тем,  
+      что называли единственно возможным.<br><br>
+
+      Там, где от неё ждали тишины,  
+      в ней оставался свет.  
+      Не громкий.  
+      Настоящий.
+    </div>
+
+    <div class="whisper">
+      Здесь не нужно понимать.<br>
+      Здесь можно быть.
+    </div>
+
+    <a class="back" href="home.html">вернуться в Дом</a>
+
+  </div>
+</div>
+
+</body>
+</html>
