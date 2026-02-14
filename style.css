@@ -31,14 +31,18 @@ main, header, footer, section, article {
 /* ─────────────────────────────
    🌞 ДЕНЬ
    ───────────────────────────── */
-
 body.day {
-  background-color: #f7f4ef; /* чистый свет */
+  background: linear-gradient(
+    180deg,
+    #f3efe6 0%,
+    #e8dcc2 40%,
+    #d4bf8a 100%
+  );
   color: #2e2a26;
 }
 
 body.day a {
-  color: #7a5c2e;
+  color: #8a6a2f;
 }
 
 /* ─────────────────────────────
