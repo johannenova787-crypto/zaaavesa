@@ -4,112 +4,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Эни — Сквозь Тени</title>
+<title>Эни — Акт I</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 html, body {
   margin: 0;
   padding: 0;
   font-family: 'Cormorant Garamond', serif;
-  background: radial-gradient(circle at top, #fffaf2, #f1e4cc);
+  background: radial-gradient(circle at top, #fffdf9, #f2e6cf);
   color: #5a4723;
   overflow-x: hidden;
-  transition: opacity 2.5s ease;
 }
 
-/* Контейнер */
+/* Плавное появление страницы */
+body {
+  opacity: 0;
+  animation: fadeIn 2.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
 .wrapper {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 100px 20px;
+  padding: 120px 30px;
   text-align: center;
 }
 
-/* Заголовок — ТОЧНО как в Johanne */
+/* Заголовки */
 .title {
-  font-size: clamp(48px, 6vw, 82px);
+  font-size: clamp(50px, 6vw, 84px);
   letter-spacing: 0.14em;
   font-weight: 600;
   color: #c6a048;
-  text-shadow:
-    0 0 12px rgba(255,215,150,0.45),
-    0 0 26px rgba(255,200,120,0.35);
-  margin-bottom: 70px;
-  opacity: 0;
-  animation: appear 2.5s ease forwards;
+  text-shadow: 0 0 20px rgba(255,215,150,0.4);
+  margin-bottom: 20px;
+  animation: rise 2s ease forwards;
+}
+
+.subtitle {
+  font-size: 22px;
+  letter-spacing: 0.25em;
+  opacity: 0.7;
+  margin-bottom: 100px;
+  animation: rise 2.5s ease forwards;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Слайдер */
 .slider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  margin-bottom: 70px;
+  width: 360px;
+  aspect-ratio: 2/3;
+  margin: 0 auto 120px auto;
+  position: relative;
+  perspective: 1200px;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(180,140,60,0.3);
+  backface-visibility: hidden;
+  transform-origin: left;
+  transition: transform 1.5s ease, opacity 1.5s ease;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide.active {
+  z-index: 2;
+}
+
+.slide.flip {
+  transform: rotateY(-180deg);
   opacity: 0;
-  animation: appear 2.5s ease forwards;
-  animation-delay: 1s;
 }
 
-.slider img {
-  width: 280px;
-  border-radius: 20px;
-  box-shadow: 0 14px 45px rgba(180,140,60,0.25);
-  transition: transform 0.6s ease;
+/* Золотая пыль */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, gold 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 2s ease forwards;
 }
 
-.slider img:hover {
-  transform: scale(1.05);
+@keyframes float {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120px); opacity: 0; }
 }
 
-.arrow {
-  font-size: 40px;
-  cursor: pointer;
-  color: #b8903f;
-  user-select: none;
-}
-
-/* Кнопки — в стиле портала */
+/* Кнопки */
 .buttons {
   display: flex;
   justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
-  opacity: 0;
-  animation: appear 2.5s ease forwards;
-  animation-delay: 2s;
+  margin-bottom: 140px;
 }
 
 .button {
-  font-size: 22px;
+  font-size: 20px;
   letter-spacing: 0.18em;
-  padding: 16px 42px;
+  padding: 18px 50px;
   border-radius: 60px;
-  border: 1px solid rgba(190,150,80,0.6);
-  background: rgba(255,245,220,0.75);
+  border: 1px solid rgba(190,150,80,0.5);
+  background: rgba(255,248,230,0.9);
   color: #8c6b2a;
-  font-weight: 500;
   cursor: pointer;
   transition: all 0.6s ease;
 }
 
 .button:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 30px rgba(255,220,160,0.6);
+  transform: scale(1.07);
+  box-shadow: 0 0 40px rgba(255,220,160,0.6);
 }
 
-/* Плавное появление */
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Отрывок */
+.excerpt {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 22px;
+  line-height: 1.9;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1.5s ease;
+}
+
+.excerpt.visible {
+  opacity: 0.9;
+  transform: translateY(0);
 }
 </style>
 </head>
@@ -118,69 +159,81 @@ html, body {
 
 <div class="wrapper">
 
-  <div class="title">
-    Эни — Сквозь Тени
-  </div>
+  <div class="title">Эни</div>
+  <div class="subtitle">Акт I — Сквозь Тени</div>
 
-  <div class="slider">
-    <div class="arrow" onclick="prev()">‹</div>
-    <img id="cover" src="images/covers/cover1.jpg" alt="Обложка">
-    <div class="arrow" onclick="next()">›</div>
+  <!-- Слайдер -->
+  <div class="slider" id="slider">
+    <div class="slide active"><img src="covers/cover1.jpg"></div>
+    <div class="slide"><img src="covers/cover2.jpg"></div>
+    <div class="slide"><img src="covers/cover3.jpg"></div>
+    <div class="slide"><img src="covers/cover4.jpg"></div>
+    <div class="slide"><img src="covers/cover5.jpg"></div>
+    <div class="slide"><img src="covers/cover6.jpg"></div>
   </div>
 
   <div class="buttons">
-    <button class="button" onclick="goToChapter()">
-      Читать отрывок
-    </button>
+    <button class="button" onclick="showExcerpt()">Читать отрывок</button>
+    <button class="button" onclick="goDeeper()">Нырнуть глубже</button>
+    <button class="button" onclick="goBuy()">Взять книгу с собой</button>
+  </div>
 
-    <button class="button" onclick="goToRooms()">
-      Нырнуть глубже
-    </button>
+  <div class="excerpt" id="excerpt">
+    Она чувствовала дыхание теней.
+    Они не были пустыми.
+    Они ждали.
+
+    И когда мир стал тише —
+    начался её путь.
   </div>
 
 </div>
 
 <script>
-const covers = [
-  "covers/cover1.jpg",
-  "covers/cover2.jpg",
-  "covers/cover3.jpg",
-  "covers/cover4.jpg",
-  "covers/cover5.jpg",
-  "covers/cover6.jpg"
-];
-
+const slides = document.querySelectorAll(".slide");
 let current = 0;
 
-function showCover() {
-  document.getElementById("cover").src = covers[current];
-}
+setInterval(() => {
+  slides[current].classList.add("flip");
 
-function next() {
-  current = (current + 1) % covers.length;
-  showCover();
-}
+  createSparkles();
 
-function prev() {
-  current = (current - 1 + covers.length) % covers.length;
-  showCover();
-}
-
-function goToChapter() {
-  document.body.style.opacity = "0";
   setTimeout(() => {
-    window.location.href = "chapter/";
-  }, 2000);
+    slides[current].classList.remove("active");
+    slides[current].classList.remove("flip");
+
+    current = (current + 1) % slides.length;
+
+    slides[current].classList.add("active");
+  }, 1500);
+
+}, 5000);
+
+function createSparkles() {
+  const slider = document.getElementById("slider");
+  for(let i=0; i<20; i++){
+    const spark = document.createElement("div");
+    spark.className = "sparkle";
+    spark.style.left = Math.random() * 100 + "%";
+    spark.style.top = "60%";
+    slider.appendChild(spark);
+    setTimeout(() => spark.remove(), 2000);
+  }
 }
 
-function goToRooms() {
-  document.body.style.opacity = "0";
-  setTimeout(() => {
-    window.location.href = "rooms/";
-  }, 2000);
+function showExcerpt(){
+  document.getElementById("excerpt").classList.add("visible");
+  document.getElementById("excerpt").scrollIntoView({behavior:"smooth"});
+}
+
+function goDeeper(){
+  window.location.href = "rooms/";
+}
+
+function goBuy(){
+  window.location.href = "buy.html";
 }
 </script>
 
 </body>
 </html>
-
