@@ -192,26 +192,43 @@ body {
 <script>
 const slides = document.querySelectorAll(".slide");
 let current = 0;
+let isAnimating = false;
 
-setInterval(() => {
-  slides[current].classList.add("flip");
+function nextSlide() {
+  if (isAnimating) return;
+  isAnimating = true;
 
+  const currentSlide = slides[current];
+  const next = (current + 1) % slides.length;
+  const nextSlide = slides[next];
+
+  currentSlide.classList.add("flip");
   createSparkles();
 
   setTimeout(() => {
-    slides[current].classList.remove("active");
-    slides[current].classList.remove("flip");
+    currentSlide.classList.remove("active");
+    currentSlide.classList.remove("flip");
 
-    current = (current + 1) % slides.length;
+    nextSlide.classList.add("active");
 
-    slides[current].classList.add("active");
-  }, 1500);
+    current = next;
+    isAnimating = false;
 
-}, 5000);
+    // пауза перед следующим перелистыванием
+    setTimeout(nextSlideDelay, 6000);
+  }, 1800); // длительность анимации
+}
+
+function nextSlideDelay() {
+  nextSlide();
+}
+
+// старт через 6 секунд
+setTimeout(nextSlideDelay, 6000);
 
 function createSparkles() {
   const slider = document.getElementById("slider");
-  for(let i=0; i<20; i++){
+  for(let i = 0; i < 12; i++) {
     const spark = document.createElement("div");
     spark.className = "sparkle";
     spark.style.left = Math.random() * 100 + "%";
@@ -222,8 +239,9 @@ function createSparkles() {
 }
 
 function showExcerpt(){
-  document.getElementById("excerpt").classList.add("visible");
-  document.getElementById("excerpt").scrollIntoView({behavior:"smooth"});
+  const ex = document.getElementById("excerpt");
+  ex.classList.add("visible");
+  ex.scrollIntoView({behavior:"smooth"});
 }
 
 function goDeeper(){
