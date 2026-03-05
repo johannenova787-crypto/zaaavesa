@@ -250,6 +250,29 @@ body {
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(-120px); opacity: 0; }
 }
+  /* Пыль при прокрутке */
+.scroll-dust {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: radial-gradient(circle, gold 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: dustFloat 3s ease-out forwards;
+  z-index: 999;
+}
+
+@keyframes dustFloat {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-120px) scale(0.4);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 
@@ -362,6 +385,27 @@ function createGoldDust(){
 
     setTimeout(()=>dust.remove(),2000);
   }
+}
+  /* Пыль при прокрутке страницы */
+
+window.addEventListener("scroll", createScrollDust);
+
+function createScrollDust(){
+
+  if(Math.random() > 0.25) return;
+
+  const dust = document.createElement("div");
+  dust.className = "scroll-dust";
+
+  dust.style.left = Math.random() * window.innerWidth + "px";
+  dust.style.top = window.scrollY + window.innerHeight * Math.random() + "px";
+
+  document.body.appendChild(dust);
+
+  setTimeout(() => {
+    dust.remove();
+  }, 3000);
+
 }
   </script>
 </body>
