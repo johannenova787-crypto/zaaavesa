@@ -427,7 +427,7 @@ window.addEventListener("scroll",()=>{
 const scrollPosition = window.scrollY + window.innerHeight
 const pageHeight = document.documentElement.scrollHeight
 
-if(!phraseShown && scrollPosition >= pageHeight - 200){
+if(!phraseShown && window.innerHeight + window.scrollY >= document.body.offsetHeight - 50){
 
 phraseShown=true
 
