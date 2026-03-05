@@ -295,6 +295,61 @@ body {
     transform: translate(-50%, -50%) scale(2.5);
   }
 }
+ /* Финальная фраза */
+
+.final-phrase {
+  position: fixed;
+  bottom: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 34px;
+  letter-spacing: 0.12em;
+  color: #c6a048;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  text-shadow: 0 0 18px rgba(255,220,150,0.6);
+  z-index: 9998;
+}
+
+.final-phrase span {
+  opacity: 0;
+  display: inline-block;
+}
+
+.page-breath {
+  animation: pageBreath 1.8s ease;
+}
+
+@keyframes pageBreath {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.004); }
+  100% { transform: scale(1); }
+}
+
+/* золотая пыль письма */
+
+.write-dust {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: radial-gradient(circle, gold 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: writeDust 2s ease forwards;
+  z-index: 9999;
+}
+
+@keyframes writeDust {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-80px);
+    opacity: 0;
+  }
+} 
 </style>
 </head>
 
@@ -347,7 +402,11 @@ body {
 </section>
   
 <script>
+
   
+  <div class="final-phrase" id="finalPhrase">
+Она не "несла Свет". Она жила как Свет.
+</div>
   
 const slides = document.querySelectorAll(".slide");
 let current = 0;
@@ -445,6 +504,62 @@ function createScrollDust(){
   }, 800);
 
 });
+  /* появление финальной фразы */
+
+let phraseShown = false;
+
+window.addEventListener("scroll", () => {
+
+  const scrollPosition = window.scrollY + window.innerHeight;
+  const pageHeight = document.body.offsetHeight;
+
+  if(!phraseShown && scrollPosition > pageHeight - 120){
+
+    phraseShown = true;
+
+    const phrase = document.getElementById("finalPhrase");
+
+    const text = phrase.innerText;
+    phrase.innerHTML = "";
+
+    text.split("").forEach(letter => {
+      const span = document.createElement("span");
+      span.textContent = letter;
+      phrase.appendChild(span);
+    });
+
+    phrase.style.opacity = 1;
+
+    document.body.classList.add("page-breath");
+
+    const letters = phrase.querySelectorAll("span");
+
+    letters.forEach((span, i) => {
+
+      setTimeout(() => {
+
+        span.style.opacity = 1;
+
+        const rect = span.getBoundingClientRect();
+
+        const dust = document.createElement("div");
+        dust.className = "write-dust";
+
+        dust.style.left = rect.left + rect.width/2 + "px";
+        dust.style.top = rect.top + "px";
+
+        document.body.appendChild(dust);
+
+        setTimeout(()=>dust.remove(),2000);
+
+      }, i * 80);
+
+    });
+
+  }
+
+});
   </script>
+
 </body>
 </html>
