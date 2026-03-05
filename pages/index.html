@@ -13,6 +13,15 @@
 
 <style>
 
+
+  #preload {
+position: fixed;
+inset: 0;
+background: radial-gradient(circle at 50% 0%, #fffdf9, #f2e6cf);
+z-index: 9999;
+transition: opacity 1.4s ease;
+}
+  
 html, body {
 margin: 0;
 padding: 0;
@@ -95,6 +104,8 @@ margin-bottom: 60px;
 }
 
 .slide {
+  transform-style: preserve-3d;
+  
 width: 100%;
 height: 100%;
 position: absolute;
@@ -110,6 +121,8 @@ transition: transform 2s ease, opacity 2s ease;
 width: 100%;
 height: 100%;
 object-fit: cover;
+opacity: 0;
+transition: opacity 1.2s ease;
 }
 
 .slide.active {
@@ -309,9 +322,10 @@ opacity: 0;
 }
 
 .cursor-glow {
-position: fixed;
-width: 12px;
-height: 12px;
+width: 18px;
+height: 18px;
+filter: blur(2px);
+}
 pointer-events: none;
 border-radius: 50%;
 background: radial-gradient(circle, rgba(255,220,140,0.8) 0%, rgba(255,220,140,0) 70%);
@@ -339,6 +353,8 @@ transform: translate(-50%, -50%) scale(2.5);
 </head>
 
 <body>
+  
+  <div id="preload"></div>
 
 <section class="hero">
 
@@ -569,6 +585,34 @@ glow.remove();
 
 });
 
+  const images = document.querySelectorAll(".slide img");
+
+images.forEach(img => {
+
+if (img.complete) {
+img.style.opacity = 1;
+}
+
+else {
+
+img.onload = () => {
+img.style.opacity = 1;
+};
+
+}
+
+});
+  
+ window.addEventListener("load", () => {
+
+const preload = document.getElementById("preload");
+
+setTimeout(() => {
+preload.style.opacity = "0";
+setTimeout(() => preload.remove(), 1400);
+}, 300);
+
+}); 
 </script>
 
 </body>
