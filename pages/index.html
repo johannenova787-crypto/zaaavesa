@@ -1,10 +1,9 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Эни — Акт I</title>
@@ -25,23 +24,17 @@ background-size: 120% 120%;
 animation: goldenBreath 18s ease-in-out infinite;
 }
 
+/* дыхание фона */
+
 @keyframes goldenBreath {
 
-0% {
-background-position: 50% 0%;
-}
-
-50% {
-background-position: 52% 6%;
-}
-
-100% {
-background-position: 50% 0%;
-}
+0% { background-position: 50% 0%; }
+50% { background-position: 52% 6%; }
+100% { background-position: 50% 0%; }
 
 }
 
-/* Плавное появление */
+/* плавное появление страницы */
 
 body {
 opacity: 0;
@@ -49,13 +42,7 @@ animation: fadeIn 2.5s ease forwards;
 }
 
 @keyframes fadeIn {
-
-to {
-opacity: 1;
-}
-
-<body>
-
+to { opacity: 1; }
 }
 
 /* HERO */
@@ -109,28 +96,26 @@ transition: transform 2s ease, opacity 2s ease;
 }
 
 .slide img{
-  opacity:0;
-  transform:scale(1.02);
-  transition:
-  opacity 1.2s ease,
-  transform 1.6s ease;
+opacity:0;
+transform:scale(1.02);
+transition:
+opacity 1.2s ease,
+transform 1.6s ease;
 }
 
 .slide img.loaded{
-  opacity:1;
-  transform:scale(1);
+opacity:1;
+transform:scale(1);
 }
- 
-.slide.active {
-z-index: 2;
-}
+
+.slide.active { z-index: 2; }
 
 .slide.flip {
 transform: rotateY(-180deg);
 opacity: 0;
 }
 
-/* Кнопки */
+/* кнопки */
 
 .buttons {
 display: flex;
@@ -156,210 +141,31 @@ transform: scale(1.07);
 box-shadow: 0 0 40px rgba(255,220,160,0.6);
 }
 
-/* О книге */
-
-.about-book {
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 80px 20px;
-background: linear-gradient(to bottom, #f2e6cf, #fffdf9);
-}
-
-.about-inner {
-max-width: 900px;
-text-align: center;
-}
-
-.about-title {
-font-size: 48px;
-letter-spacing: 0.15em;
-margin-bottom: 40px;
-color: #b98a2d;
-}
-
-.about-book p {
-font-size: 22px;
-line-height: 1.9;
-margin-bottom: 30px;
-opacity: 0.85;
-}
-
-.about-meta {
-margin-top: 50px;
-font-size: 18px;
-opacity: 0.7;
-line-height: 1.8;
-}
-
-/* Блок отрывка */
-
-.excerpt-section {
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-background: linear-gradient(to bottom, #fffdf9, #f7ecd8);
-padding: 120px 20px;
-}
-
-.excerpt-inner {
-max-width: 800px;
-text-align: center;
-position: relative;
-}
-
-.excerpt-title {
-font-size: 48px;
-letter-spacing: 0.15em;
-margin-bottom: 50px;
-color: #b98a2d;
-}
-
-.excerpt-toggle {
-font-size: 18px;
-letter-spacing: 0.2em;
-padding: 14px 40px;
-border-radius: 60px;
-border: 1px solid rgba(190,150,80,0.5);
-background: rgba(255,248,230,0.9);
-color: #8c6b2a;
-cursor: pointer;
-transition: all 0.6s ease;
-}
-
-.excerpt-toggle:hover {
-box-shadow: 0 0 30px rgba(255,215,140,0.6);
-transform: scale(1.05);
-}
-
-.excerpt-wrapper {
-max-height: 0;
-overflow: hidden;
-transition: max-height 1.8s ease, opacity 1.4s ease;
-opacity: 0;
-margin-top: 0;
-}
-
-.excerpt-wrapper.open {
-max-height: 800px;
-opacity: 1;
-margin-top: 60px;
-}
-
-.excerpt-text {
-font-size: 22px;
-line-height: 1.9;
-padding: 40px;
-border-radius: 20px;
-background: rgba(255,255,255,0.6);
-box-shadow: 0 0 40px rgba(210,170,90,0.2);
-transform-origin: top center;
-transition: transform 1.5s ease;
-}
-
-.excerpt-wrapper.open .excerpt-text {
-transform: rotateX(3deg);
-}
-
-/* Золотая пыль */
-
-.sparkle,
-.gold-particle {
-position: absolute;
-width: 6px;
-height: 6px;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-border-radius: 50%;
-pointer-events: none;
-animation: float 2s ease forwards;
-}
-
-@keyframes float {
-
-from {
-transform: translateY(0);
-opacity: 1;
-}
-
-to {
-transform: translateY(-120px);
-opacity: 0;
-}
-
-}
-
-/* Пыль при прокрутке */
-
-.scroll-dust {
-position: fixed;
-width: 5px;
-height: 5px;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-border-radius: 50%;
-pointer-events: none;
-animation: dustFloat 3s ease-out forwards;
-z-index: 999;
-}
-
-@keyframes dustFloat {
-
-from {
-transform: translateY(0) scale(1);
-opacity: 1;
-}
-
-to {
-transform: translateY(-120px) scale(0.4);
-opacity: 0;
-}
-
-}
-
-.cursor-glow {
-position: fixed;
-width: 12px;
-height: 12px;
-pointer-events: none;
-border-radius: 50%;
-background: radial-gradient(circle, rgba(255,220,140,0.8) 0%, rgba(255,220,140,0) 70%);
-transform: translate(-50%, -50%);
-animation: glowFade 0.8s ease-out forwards;
-z-index: 9999;
-}
-
-@keyframes glowFade {
-
-from {
-opacity: 0.9;
-transform: translate(-50%, -50%) scale(1);
-}
-
-to {
-opacity: 0;
-transform: translate(-50%, -50%) scale(2.5);
-}
-
-}
-
 </style>
 
 </head>
 
- <script>
-  
+<body>
+
+<!-- Здесь будет твой контент страницы -->
+
+<script>
+
+/* мягкая загрузка изображений */
+
 const images = document.querySelectorAll(".slide img");
 
 images.forEach(img => {
-  if (img.complete) {
-    img.classList.add("loaded");
-  } else {
-    img.onload = () => {
-      img.classList.add("loaded");
-    };
-  }
+if (img.complete) {
+img.classList.add("loaded");
+} else {
+img.onload = () => {
+img.classList.add("loaded");
+};
+}
 });
- </script>
- </body>
- 
+
+</script>
+
+</body>
+</html>
