@@ -431,7 +431,13 @@ phrase.innerHTML=""
 ;[...text].forEach(letter=>{
 
 const span=document.createElement("span")
+
+if(letter===" "){
+span.innerHTML="&nbsp;"
+}else{
 span.textContent=letter
+}
+
 phrase.appendChild(span)
 
 })
