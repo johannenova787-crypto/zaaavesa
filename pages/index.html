@@ -350,6 +350,8 @@ transform: translate(-50%, -50%) scale(2.5);
 
 </style>
 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+  
 </head>
 
 <body>
@@ -361,36 +363,36 @@ transform: translate(-50%, -50%) scale(2.5);
 <div class="title">Эни</div>
 
 <div class="subtitle">
+  
 Акт I — Сквозь Тени
+  
 </div>
+  
+<div id="book">
 
-<div class="slider" id="slider">
-
-<div class="slide active">
-<img src="covers/cover1.jpg">
-</div>
-
-<div class="slide">
-<img src="covers/cover2.jpg">
-</div>
-
-<div class="slide">
-<img src="covers/cover3.jpg">
-</div>
-
-<div class="slide">
-<img src="covers/cover4.jpg">
-</div>
-
-<div class="slide">
-<img src="covers/cover5.jpg">
-</div>
-
-<div class="slide">
-<img src="covers/cover6.jpg">
-</div>
+  <div class="page"><img src="covers/cover1.jpg"></div>
+  <div class="page"><img src="covers/cover2.jpg"></div>
+  <div class="page"><img src="covers/cover3.jpg"></div>
+  <div class="page"><img src="covers/cover4.jpg"></div>
+  <div class="page"><img src="covers/cover5.jpg"></div>
+  <div class="page"><img src="covers/cover6.jpg"></div>
 
 </div>
+
+  #book {
+width:420px;
+height:630px;
+margin:auto;
+}
+
+.page img{
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 30px 80px rgba(180,140,60,0.35);
+}
+  
 
 <div class="buttons">
 
@@ -469,6 +471,13 @@ transform: translate(-50%, -50%) scale(2.5);
 </section>
 
 <script>
+
+  $("#book").turn({
+width:420,
+height:630,
+autoCenter:true
+});
+  
 
 const slides = document.querySelectorAll(".slide");
 let current = 0;
