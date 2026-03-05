@@ -430,7 +430,7 @@ window.addEventListener("scroll",()=>{
 const scrollPosition = window.scrollY + window.innerHeight
 const pageHeight = document.documentElement.scrollHeight
 
-if(!phraseShown && scrollPosition >= pageHeight-20){
+if(!phraseShown && scrollPosition  >= pageHeight - 200
 
 phraseShown=true
 
@@ -481,6 +481,7 @@ setTimeout(()=>dust.remove(),2000)
 })
 
 </script>
-
+<div style="height:40vh;"></div>
+  
 </body>
 </html>
