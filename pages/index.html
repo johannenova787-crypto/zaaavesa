@@ -24,13 +24,9 @@ body {
   opacity: 0;
   animation: fadeIn 2.5s ease forwards;
 }
+@keyframes fadeIn { to { opacity: 1; } }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* HERO БЛОК (первый экран) */
-
+/* HERO */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -58,7 +54,6 @@ body {
 }
 
 /* Слайдер */
-
 .slider {
   width: 420px;
   aspect-ratio: 2/3;
@@ -76,7 +71,7 @@ body {
   box-shadow: 0 30px 80px rgba(180,140,60,0.35);
   backface-visibility: hidden;
   transform-origin: left;
-  transition: transform 1.8s ease, opacity 1.8s ease;
+  transition: transform 2s ease, opacity 2s ease;
 }
 
 .slide img {
@@ -85,17 +80,13 @@ body {
   object-fit: cover;
 }
 
-.slide.active {
-  z-index: 2;
-}
-
+.slide.active { z-index: 2; }
 .slide.flip {
   transform: rotateY(-180deg);
   opacity: 0;
 }
 
 /* Кнопки */
-
 .buttons {
   display: flex;
   gap: 40px;
@@ -120,8 +111,7 @@ body {
   box-shadow: 0 0 40px rgba(255,220,160,0.6);
 }
 
-/* О КНИГЕ */
-
+/* О книге */
 .about-book {
   min-height: 100vh;
   display: flex;
@@ -157,9 +147,77 @@ body {
   line-height: 1.8;
 }
 
-/* Золотая пыль */
+/* Блок отрывка */
+.excerpt-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #fffdf9, #f7ecd8);
+  padding: 120px 20px;
+}
 
-.sparkle {
+.excerpt-inner {
+  max-width: 800px;
+  text-align: center;
+  position: relative;
+}
+
+.excerpt-title {
+  font-size: 48px;
+  letter-spacing: 0.15em;
+  margin-bottom: 50px;
+  color: #b98a2d;
+}
+
+.excerpt-toggle {
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  padding: 14px 40px;
+  border-radius: 60px;
+  border: 1px solid rgba(190,150,80,0.5);
+  background: rgba(255,248,230,0.9);
+  color: #8c6b2a;
+  cursor: pointer;
+  transition: all 0.6s ease;
+}
+
+.excerpt-toggle:hover {
+  box-shadow: 0 0 30px rgba(255,215,140,0.6);
+  transform: scale(1.05);
+}
+
+.excerpt-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1.8s ease, opacity 1.4s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+
+.excerpt-wrapper.open {
+  max-height: 800px;
+  opacity: 1;
+  margin-top: 60px;
+}
+
+.excerpt-text {
+  font-size: 22px;
+  line-height: 1.9;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 0 40px rgba(210,170,90,0.2);
+  transform-origin: top center;
+  transition: transform 1.5s ease;
+}
+
+.excerpt-wrapper.open .excerpt-text {
+  transform: rotateX(3deg);
+}
+
+/* Золотая пыль */
+.sparkle, .gold-particle {
   position: absolute;
   width: 6px;
   height: 6px;
@@ -201,21 +259,8 @@ body {
 <section class="about-book" id="about">
   <div class="about-inner">
     <div class="about-title">О книге</div>
-
-    <p>
-      «Эни. Акт I — Сквозь Тени» — история о границе между светом и тем,
-      что остаётся за пределами видимого.
-      Это путь, который начинается с едва слышного шёпота
-      и ведёт к встрече с собой.
-    </p>
-
-    <p>
-      Здесь тени — не враги.
-      Они память, глубина, отражение.
-      И только пройдя сквозь них,
-      можно увидеть истинный свет.
-    </p>
-
+    <p>«Эни. Акт I — Сквозь Тени» — история о границе между светом и тем, что остаётся за пределами видимого.</p>
+    <p>Здесь тени — не враги. Они память, глубина, отражение.</p>
     <div class="about-meta">
       Жанр: мистическая проза<br>
       Формат: цифровая книга (PDF)<br>
@@ -224,26 +269,16 @@ body {
   </div>
 </section>
 
-  <section class="excerpt-section" id="excerpt">
+<section class="excerpt-section">
   <div class="excerpt-inner">
     <div class="excerpt-title">Бесплатный отрывок</div>
-
-    <div class="excerpt-text">
-      <p>
-        Она чувствовала дыхание теней.
-        Они не были пустыми.
-        Они ждали.
-      </p>
-
-      <p>
-        И когда мир стал тише —
-        начался её путь.
-      </p>
+    <button class="excerpt-toggle" onclick="toggleExcerpt()">Развернуть фрагмент</button>
+    <div class="excerpt-wrapper" id="excerptWrapper">
+      <div class="excerpt-text">
+        <p>Она чувствовала дыхание теней. Они не были пустыми. Они ждали.</p>
+        <p>И когда мир стал тише — начался её путь.</p>
+      </div>
     </div>
-
-    <button class="excerpt-button" onclick="downloadExcerpt()">
-      Скачать полный фрагмент (PDF)
-    </button>
   </div>
 </section>
 
@@ -261,46 +296,41 @@ function nextSlide() {
   const nextSlide = slides[next];
 
   currentSlide.classList.add("flip");
-  createSparkles();
 
   setTimeout(() => {
-    currentSlide.classList.remove("active");
-    currentSlide.classList.remove("flip");
+    currentSlide.classList.remove("active","flip");
     nextSlide.classList.add("active");
     current = next;
     isAnimating = false;
-    setTimeout(nextSlideDelay, 7000);
+    setTimeout(nextSlide, 7000);
   }, 2000);
 }
 
-function nextSlideDelay() {
-  nextSlide();
-}
-
-setTimeout(nextSlideDelay, 7000);
-
-function createSparkles() {
-  const slider = document.getElementById("slider");
-  for(let i = 0; i < 10; i++) {
-    const spark = document.createElement("div");
-    spark.className = "sparkle";
-    spark.style.left = Math.random() * 100 + "%";
-    spark.style.top = "60%";
-    slider.appendChild(spark);
-    setTimeout(() => spark.remove(), 2000);
-  }
-}
+setTimeout(nextSlide, 7000);
 
 function scrollToAbout(){
   document.getElementById("about").scrollIntoView();
 }
 
-function goDeeper(){
-  window.location.href = "rooms/";
+function goDeeper(){ window.location.href = "rooms/"; }
+function goBuy(){ window.location.href = "buy.html"; }
+
+function toggleExcerpt(){
+  const wrapper = document.getElementById("excerptWrapper");
+  wrapper.classList.toggle("open");
+  createGoldDust();
 }
 
-function goBuy(){
-  window.location.href = "buy.html";
+function createGoldDust(){
+  const container = document.querySelector(".excerpt-inner");
+  for(let i=0;i<12;i++){
+    const dust = document.createElement("div");
+    dust.className="gold-particle";
+    dust.style.left=Math.random()*100+"%";
+    dust.style.bottom="40px";
+    container.appendChild(dust);
+    setTimeout(()=>dust.remove(),2000);
+  }
 }
 </script>
 
