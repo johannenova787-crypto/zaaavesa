@@ -13,12 +13,31 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Cormorant Garamond', serif;
-  background: radial-gradient(circle at top, #fffdf9, #f2e6cf);
   color: #5a4723;
   overflow-x: hidden;
   scroll-behavior: smooth;
+
+  background: radial-gradient(circle at 50% 0%, #fffdf9, #f2e6cf);
+  background-size: 120% 120%;
+  animation: goldenBreath 18s ease-in-out infinite;
 }
 
+  @keyframes goldenBreath {
+
+  0% {
+    background-position: 50% 0%;
+  }
+
+  50% {
+    background-position: 52% 6%;
+  }
+
+  100% {
+    background-position: 50% 0%;
+  }
+
+}
+  
 /* Плавное появление */
 body {
   opacity: 0;
