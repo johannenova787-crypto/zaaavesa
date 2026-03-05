@@ -282,7 +282,6 @@ body {
   </div>
 </section>
 
-<script>
 const slides = document.querySelectorAll(".slide");
 let current = 0;
 let isAnimating = false;
@@ -292,16 +291,18 @@ function nextSlide() {
   isAnimating = true;
 
   const currentSlide = slides[current];
-  const next = (current + 1) % slides.length;
-  const nextSlide = slides[next];
+  const nextIndex = (current + 1) % slides.length;
+  const upcomingSlide = slides[nextIndex];
 
   currentSlide.classList.add("flip");
 
   setTimeout(() => {
     currentSlide.classList.remove("active","flip");
-    nextSlide.classList.add("active");
-    current = next;
+    upcomingSlide.classList.add("active");
+
+    current = nextIndex;
     isAnimating = false;
+
     setTimeout(nextSlide, 7000);
   }, 2000);
 }
@@ -309,11 +310,16 @@ function nextSlide() {
 setTimeout(nextSlide, 7000);
 
 function scrollToAbout(){
-  document.getElementById("about").scrollIntoView();
+  document.getElementById("about").scrollIntoView({behavior:"smooth"});
 }
 
-function goDeeper(){ window.location.href = "rooms/"; }
-function goBuy(){ window.location.href = "buy.html"; }
+function goDeeper(){
+  window.location.href = "rooms/index.html";
+}
+
+function goBuy(){
+  window.location.href = "buy.html";
+}
 
 function toggleExcerpt(){
   const wrapper = document.getElementById("excerptWrapper");
@@ -323,16 +329,18 @@ function toggleExcerpt(){
 
 function createGoldDust(){
   const container = document.querySelector(".excerpt-inner");
+
   for(let i=0;i<12;i++){
     const dust = document.createElement("div");
     dust.className="gold-particle";
+
     dust.style.left=Math.random()*100+"%";
     dust.style.bottom="40px";
+
     container.appendChild(dust);
+
     setTimeout(()=>dust.remove(),2000);
   }
 }
-</script>
-
 </body>
 </html>
