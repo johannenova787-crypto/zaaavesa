@@ -1,1 +1,341 @@
-<!DOCTYPE html> <html lang="ru"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Эни — Акт I</title> <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet"> <style> html, body { margin: 0; padding: 0; font-family: 'Cormorant Garamond', serif; color: #5a4723; overflow-x: hidden; scroll-behavior: smooth; background: radial-gradient(circle at 50% 0%, #fffdf9, #f2e6cf); background-size: 120% 120%; animation: goldenBreath 18s ease-in-out infinite; } @keyframes goldenBreath { 0% { background-position: 50% 0%; } 50% { background-position: 52% 6%; } 100% { background-position: 50% 0%; } } /* Плавное появление */ body { opacity: 0; animation: fadeIn 2.5s ease forwards; } @keyframes fadeIn { to { opacity: 1; } } /* HERO */ .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; } .title { font-size: clamp(64px, 6vw, 96px); letter-spacing: 0.14em; font-weight: 600; color: #c6a048; text-shadow: 0 0 30px rgba(255,215,150,0.4); margin-bottom: 20px; } .subtitle { font-size: 24px; letter-spacing: 0.25em; opacity: 0.7; margin-bottom: 80px; } /* Слайдер */ .slider { width: 420px; aspect-ratio: 2/3; position: relative; perspective: 1200px; margin-bottom: 60px; } .slide { width: 100%; height: 100%; position: absolute; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 80px rgba(180,140,60,0.35); backface-visibility: hidden; transform-origin: left; transition: transform 2s ease, opacity 2s ease; } .slide img { width: 100%; height: 100%; object-fit: cover; } .slide.active { z-index: 2; } .slide.flip { transform: rotateY(-180deg); opacity: 0; } /* Кнопки */ .buttons { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; } .button { font-size: 18px; letter-spacing: 0.18em; padding: 16px 46px; border-radius: 60px; border: 1px solid rgba(190,150,80,0.5); background: rgba(255,248,230,0.9); color: #8c6b2a; cursor: pointer; transition: all 0.6s ease; } .button:hover { transform: scale(1.07); box-shadow: 0 0 40px rgba(255,220,160,0.6); } /* О книге */ .about-book { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 20px; background: linear-gradient(to bottom, #f2e6cf, #fffdf9); } .about-inner { max-width: 900px; text-align: center; } .about-title { font-size: 48px; letter-spacing: 0.15em; margin-bottom: 40px; color: #b98a2d; } .about-book p { font-size: 22px; line-height: 1.9; margin-bottom: 30px; opacity: 0.85; } .about-meta { margin-top: 50px; font-size: 18px; opacity: 0.7; line-height: 1.8; } /* Блок отрывка */ .excerpt-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(to bottom, #fffdf9, #f7ecd8); padding: 120px 20px; } .excerpt-inner { max-width: 800px; text-align: center; position: relative; } .excerpt-title { font-size: 48px; letter-spacing: 0.15em; margin-bottom: 50px; color: #b98a2d; } .excerpt-toggle { font-size: 18px; letter-spacing: 0.2em; padding: 14px 40px; border-radius: 60px; border: 1px solid rgba(190,150,80,0.5); background: rgba(255,248,230,0.9); color: #8c6b2a; cursor: pointer; transition: all 0.6s ease; } .excerpt-toggle:hover { box-shadow: 0 0 30px rgba(255,215,140,0.6); transform: scale(1.05); } .excerpt-wrapper { max-height: 0; overflow: hidden; transition: max-height 1.8s ease, opacity 1.4s ease; opacity: 0; margin-top: 0; } .excerpt-wrapper.open { max-height: 800px; opacity: 1; margin-top: 60px; } .excerpt-text { font-size: 22px; line-height: 1.9; padding: 40px; border-radius: 20px; background: rgba(255,255,255,0.6); box-shadow: 0 0 40px rgba(210,170,90,0.2); transform-origin: top center; transition: transform 1.5s ease; } .excerpt-wrapper.open .excerpt-text { transform: rotateX(3deg); } /* Золотая пыль */ .sparkle, .gold-particle { position: absolute; width: 6px; height: 6px; background: radial-gradient(circle, gold 0%, transparent 70%); border-radius: 50%; pointer-events: none; animation: float 2s ease forwards; } @keyframes float { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-120px); opacity: 0; } } /* Пыль при прокрутке */ .scroll-dust { position: fixed; width: 5px; height: 5px; background: radial-gradient(circle, gold 0%, transparent 70%); border-radius: 50%; pointer-events: none; animation: dustFloat 3s ease-out forwards; z-index: 999; } @keyframes dustFloat { from { transform: translateY(0) scale(1); opacity: 1; } to { transform: translateY(-120px) scale(0.4); opacity: 0; } } .cursor-glow { position: fixed; width: 12px; height: 12px; pointer-events: none; border-radius: 50%; background: radial-gradient(circle, rgba(255,220,140,0.8) 0%, rgba(255,220,140,0) 70%); transform: translate(-50%, -50%); animation: glowFade 0.8s ease-out forwards; z-index: 9999; } @keyframes glowFade { from { opacity: 0.9; transform: translate(-50%, -50%) scale(1); } to { opacity: 0; transform: translate(-50%, -50%) scale(2.5); } } </style> </head> <body> <section class="hero"> <div class="title">Эни</div> <div class="subtitle">Акт I — Сквозь Тени</div> <div class="slider" id="slider"> <div class="slide active"><img src="covers/cover1.jpg"></div> <div class="slide"><img src="covers/cover2.jpg"></div> <div class="slide"><img src="covers/cover3.jpg"></div> <div class="slide"><img src="covers/cover4.jpg"></div> <div class="slide"><img src="covers/cover5.jpg"></div> <div class="slide"><img src="covers/cover6.jpg"></div> </div> <div class="buttons"> <button class="button" onclick="scrollToAbout()">О книге</button> <button class="button" onclick="goDeeper()">Нырнуть глубже</button> <button class="button" onclick="goBuy()">Взять книгу с собой</button> </div> </section> <section class="about-book" id="about"> <div class="about-inner"> <div class="about-title">О книге</div> <p>«Эни. Акт I — Сквозь Тени» — история о границе между светом и тем, что остаётся за пределами видимого.</p> <p>Здесь тени — не враги. Они память, глубина, отражение.</p> <div class="about-meta"> Жанр: мистическая проза<br> Формат: цифровая книга (PDF)<br> Объём: 121 страница </div> </div> </section> <section class="excerpt-section"> <div class="excerpt-inner"> <div class="excerpt-title">Бесплатный отрывок</div> <button class="excerpt-toggle" onclick="toggleExcerpt()">Развернуть фрагмент</button> <div class="excerpt-wrapper" id="excerptWrapper"> <div class="excerpt-text"> <p>Она чувствовала дыхание теней. Они не были пустыми. Они ждали.</p> <p>И когда мир стал тише — начался её путь.</p> </div> </div> </div> </section> <script> const slides = document.querySelectorAll(".slide"); let current = 0; let isAnimating = false; function nextSlide() { if (isAnimating) return; isAnimating = true; const currentSlide = slides[current]; const nextIndex = (current + 1) % slides.length; const upcomingSlide = slides[nextIndex]; currentSlide.classList.add("flip"); setTimeout(() => { currentSlide.classList.remove("active","flip"); upcomingSlide.classList.add("active"); current = nextIndex; isAnimating = false; setTimeout(nextSlide, 7000); }, 2000); } setTimeout(nextSlide, 7000); function scrollToAbout(){ document.getElementById("about").scrollIntoView({behavior:"smooth"}); } function goDeeper(){ window.location.href = "rooms/index.html"; } function goBuy(){ window.location.href = "buy.html"; } function toggleExcerpt(){ const wrapper = document.getElementById("excerptWrapper"); wrapper.classList.toggle("open"); createGoldDust(); } function createGoldDust(){ const container = document.querySelector(".excerpt-inner"); for(let i=0;i<12;i++){ const dust = document.createElement("div"); dust.className="gold-particle"; dust.style.left=Math.random()*100+"%"; dust.style.bottom="40px"; container.appendChild(dust); setTimeout(()=>dust.remove(),2000); } } /* Пыль при прокрутке страницы */ window.addEventListener("scroll", createScrollDust); function createScrollDust(){ if(Math.random() > 0.25) return; const dust = document.createElement("div"); dust.className = "scroll-dust"; dust.style.left = Math.random() * window.innerWidth + "px"; dust.style.top = window.scrollY + window.innerHeight * Math.random() + "px"; document.body.appendChild(dust); setTimeout(() => { dust.remove(); }, 3000); } document.addEventListener("mousemove", (e) => { const glow = document.createElement("div"); glow.className = "cursor-glow"; glow.style.left = e.clientX + "px"; glow.style.top = e.clientY + "px"; document.body.appendChild(glow); setTimeout(() => { glow.remove(); }, 800); }); </script> </body> </html>
+ <!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Эни — Акт I</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+html, body {
+margin: 0;
+padding: 0;
+font-family: 'Cormorant Garamond', serif;
+color: #5a4723;
+overflow-x: hidden;
+scroll-behavior: smooth;
+background: radial-gradient(circle at 50% 0%, #fffdf9, #f2e6cf);
+background-size: 120% 120%;
+animation: goldenBreath 18s ease-in-out infinite;
+}
+
+@keyframes goldenBreath {
+
+0% {
+background-position: 50% 0%;
+}
+
+50% {
+background-position: 52% 6%;
+}
+
+100% {
+background-position: 50% 0%;
+}
+
+}
+
+/* Плавное появление */
+
+body {
+opacity: 0;
+animation: fadeIn 2.5s ease forwards;
+}
+
+@keyframes fadeIn {
+
+to {
+opacity: 1;
+}
+
+}
+
+/* HERO */
+
+.hero {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 40px 20px;
+}
+
+.title {
+font-size: clamp(64px, 6vw, 96px);
+letter-spacing: 0.14em;
+font-weight: 600;
+color: #c6a048;
+text-shadow: 0 0 30px rgba(255,215,150,0.4);
+margin-bottom: 20px;
+}
+
+.subtitle {
+font-size: 24px;
+letter-spacing: 0.25em;
+opacity: 0.7;
+margin-bottom: 80px;
+}
+
+/* Слайдер */
+
+.slider {
+width: 420px;
+aspect-ratio: 2/3;
+position: relative;
+perspective: 1200px;
+margin-bottom: 60px;
+}
+
+.slide {
+width: 100%;
+height: 100%;
+position: absolute;
+border-radius: 28px;
+overflow: hidden;
+box-shadow: 0 30px 80px rgba(180,140,60,0.35);
+backface-visibility: hidden;
+transform-origin: left;
+transition: transform 2s ease, opacity 2s ease;
+}
+
+.slide img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.slide.active {
+z-index: 2;
+}
+
+.slide.flip {
+transform: rotateY(-180deg);
+opacity: 0;
+}
+
+/* Кнопки */
+
+.buttons {
+display: flex;
+gap: 40px;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.button {
+font-size: 18px;
+letter-spacing: 0.18em;
+padding: 16px 46px;
+border-radius: 60px;
+border: 1px solid rgba(190,150,80,0.5);
+background: rgba(255,248,230,0.9);
+color: #8c6b2a;
+cursor: pointer;
+transition: all 0.6s ease;
+}
+
+.button:hover {
+transform: scale(1.07);
+box-shadow: 0 0 40px rgba(255,220,160,0.6);
+}
+
+/* О книге */
+
+.about-book {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 80px 20px;
+background: linear-gradient(to bottom, #f2e6cf, #fffdf9);
+}
+
+.about-inner {
+max-width: 900px;
+text-align: center;
+}
+
+.about-title {
+font-size: 48px;
+letter-spacing: 0.15em;
+margin-bottom: 40px;
+color: #b98a2d;
+}
+
+.about-book p {
+font-size: 22px;
+line-height: 1.9;
+margin-bottom: 30px;
+opacity: 0.85;
+}
+
+.about-meta {
+margin-top: 50px;
+font-size: 18px;
+opacity: 0.7;
+line-height: 1.8;
+}
+
+/* Блок отрывка */
+
+.excerpt-section {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+background: linear-gradient(to bottom, #fffdf9, #f7ecd8);
+padding: 120px 20px;
+}
+
+.excerpt-inner {
+max-width: 800px;
+text-align: center;
+position: relative;
+}
+
+.excerpt-title {
+font-size: 48px;
+letter-spacing: 0.15em;
+margin-bottom: 50px;
+color: #b98a2d;
+}
+
+.excerpt-toggle {
+font-size: 18px;
+letter-spacing: 0.2em;
+padding: 14px 40px;
+border-radius: 60px;
+border: 1px solid rgba(190,150,80,0.5);
+background: rgba(255,248,230,0.9);
+color: #8c6b2a;
+cursor: pointer;
+transition: all 0.6s ease;
+}
+
+.excerpt-toggle:hover {
+box-shadow: 0 0 30px rgba(255,215,140,0.6);
+transform: scale(1.05);
+}
+
+.excerpt-wrapper {
+max-height: 0;
+overflow: hidden;
+transition: max-height 1.8s ease, opacity 1.4s ease;
+opacity: 0;
+margin-top: 0;
+}
+
+.excerpt-wrapper.open {
+max-height: 800px;
+opacity: 1;
+margin-top: 60px;
+}
+
+.excerpt-text {
+font-size: 22px;
+line-height: 1.9;
+padding: 40px;
+border-radius: 20px;
+background: rgba(255,255,255,0.6);
+box-shadow: 0 0 40px rgba(210,170,90,0.2);
+transform-origin: top center;
+transition: transform 1.5s ease;
+}
+
+.excerpt-wrapper.open .excerpt-text {
+transform: rotateX(3deg);
+}
+
+/* Золотая пыль */
+
+.sparkle,
+.gold-particle {
+position: absolute;
+width: 6px;
+height: 6px;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+border-radius: 50%;
+pointer-events: none;
+animation: float 2s ease forwards;
+}
+
+@keyframes float {
+
+from {
+transform: translateY(0);
+opacity: 1;
+}
+
+to {
+transform: translateY(-120px);
+opacity: 0;
+}
+
+}
+
+/* Пыль при прокрутке */
+
+.scroll-dust {
+position: fixed;
+width: 5px;
+height: 5px;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+border-radius: 50%;
+pointer-events: none;
+animation: dustFloat 3s ease-out forwards;
+z-index: 999;
+}
+
+@keyframes dustFloat {
+
+from {
+transform: translateY(0) scale(1);
+opacity: 1;
+}
+
+to {
+transform: translateY(-120px) scale(0.4);
+opacity: 0;
+}
+
+}
+
+.cursor-glow {
+position: fixed;
+width: 12px;
+height: 12px;
+pointer-events: none;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,220,140,0.8) 0%, rgba(255,220,140,0) 70%);
+transform: translate(-50%, -50%);
+animation: glowFade 0.8s ease-out forwards;
+z-index: 9999;
+}
+
+@keyframes glowFade {
+
+from {
+opacity: 0.9;
+transform: translate(-50%, -50%) scale(1);
+}
+
+to {
+opacity: 0;
+transform: translate(-50%, -50%) scale(2.5);
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
