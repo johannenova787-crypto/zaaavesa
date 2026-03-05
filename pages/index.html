@@ -106,10 +106,13 @@ transform-origin: left;
 transition: transform 2s ease, opacity 2s ease;
 }
 
-.slide img {
-width: 100%;
-height: 100%;
-object-fit: cover;
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+
+  opacity:0;
+  transition:opacity 1.2s ease;
 }
 
 .slide.active {
@@ -339,3 +342,16 @@ transform: translate(-50%, -50%) scale(2.5);
 </head>
 
 <body>
+ const images = document.querySelectorAll(".slide img");
+
+images.forEach(img => {
+  if (img.complete) {
+    img.style.opacity = 1;
+  } else {
+    img.onload = () => {
+      img.style.opacity = 1;
+    };
+  }
+});
+ </body>
+ 
