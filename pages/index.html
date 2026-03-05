@@ -12,28 +12,98 @@ background:#000;
 color:white;
 font-family:serif;
 overflow-x:hidden;
+opacity:0;
+transition:opacity 1.5s ease;
 }
 
-.space{
-height:180vh;
+/* мягкая загрузка */
+body.loaded{
+opacity:1;
 }
+
+section{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+padding:40px;
+}
+
+/* обложка */
+
+.book{
+width:260px;
+transition:transform 0.2s ease;
+perspective:800px;
+}
+
+.book img{
+width:100%;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(255,220,120,0.2);
+}
+
+/* кнопка */
+
+button{
+margin-top:30px;
+padding:14px 40px;
+font-size:16px;
+border-radius:30px;
+border:1px solid rgba(255,220,120,0.5);
+background:rgba(255,240,200,0.1);
+color:#ffd77a;
+cursor:pointer;
+transition:all 0.5s ease;
+}
+
+button:hover{
+transform:scale(1.08);
+box-shadow:0 0 30px rgba(255,220,120,0.5);
+}
+
+/* фрагмент */
+
+#excerpt{
+max-width:700px;
+line-height:1.9;
+font-size:20px;
+opacity:0;
+max-height:0;
+overflow:hidden;
+transition:all 1s ease;
+margin-top:30px;
+}
+
+#excerpt.open{
+opacity:0.9;
+max-height:600px;
+}
+
+/* финальная фраза */
 
 #finalPhrase{
 position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:40px;
-opacity:0;
+font-size:42px;
 letter-spacing:4px;
-text-align:center;
+opacity:0;
 pointer-events:none;
+color:#ffd86b;
+text-align:center;
+text-shadow:0 0 20px rgba(255,220,120,0.7);
 }
 
 .letter{
 opacity:0;
 transition:opacity 1.2s ease;
 }
+
+/* золотая пыль */
 
 .dust{
 position:fixed;
@@ -57,20 +127,79 @@ opacity:0;
 }
 }
 
+/* дыхание страницы */
+
+.pause{
+animation:breath 1.5s ease;
+}
+
+@keyframes breath{
+0%{transform:scale(1)}
+50%{transform:scale(1.01)}
+100%{transform:scale(1)}
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="space"></div>
+<section>
 
-<div id="finalPhrase">
-Для меня земля слишком огромна
+<div class="book" id="book">
+<img src="cover.jpg">
 </div>
 
-<div class="space"></div>
+<button onclick="toggleExcerpt()">Развернуть фрагмент</button>
+
+<div id="excerpt">
+Она шла сквозь тени,  
+не пытаясь победить их.  
+Свет в ней был тише ветра  
+и глубже памяти.  
+</div>
+
+</section>
+
+<section style="height:140vh"></section>
+
+<div id="finalPhrase">
+Она не «несла Свет.  
+Она жила как Свет
+</div>
 
 <script>
+
+/* мягкая загрузка */
+
+window.addEventListener("load",()=>{
+document.body.classList.add("loaded")
+})
+
+/* поворот книги */
+
+const book=document.getElementById("book")
+
+document.addEventListener("mousemove",(e)=>{
+
+const x=(e.clientX/window.innerWidth-0.5)*20
+const y=(e.clientY/window.innerHeight-0.5)*20
+
+book.style.transform=
+`rotateY(${x}deg) rotateX(${-y}deg)`
+
+})
+
+/* раскрытие фрагмента */
+
+function toggleExcerpt(){
+
+const ex=document.getElementById("excerpt")
+ex.classList.toggle("open")
+
+}
+
+/* финальная фраза */
 
 let phraseShown=false
 
@@ -82,6 +211,8 @@ const pageHeight=document.body.scrollHeight-window.innerHeight
 if(!phraseShown && scrollPosition>=pageHeight-200){
 
 phraseShown=true
+
+document.body.classList.add("pause")
 
 const phrase=document.getElementById("finalPhrase")
 const text=phrase.innerText
@@ -112,7 +243,7 @@ createDust()
 
 function createDust(){
 
-for(let i=0;i<40;i++){
+for(let i=0;i<60;i++){
 
 const dust=document.createElement("div")
 dust.classList.add("dust")
