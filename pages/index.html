@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -365,13 +367,17 @@ to{transform:translateY(-60px);opacity:0;}
 
 <script>
 
-document.querySelectorAll(".slide img").forEach(img=>{
+document.querySelectorAll(".slide img").forEach(img=
 if(img.complete){
 img.parentElement.classList.add("loaded")
 }else{
 img.onload=()=>img.parentElement.classList.add("loaded")
 }
 })
+
+.slide.loaded{
+opacity:1;
+}  
 
 const slides=document.querySelectorAll(".slide")
 let current=0
