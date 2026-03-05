@@ -273,6 +273,28 @@ body {
     opacity: 0;
   }
 }
+  .cursor-glow {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,220,140,0.8) 0%, rgba(255,220,140,0) 70%);
+  transform: translate(-50%, -50%);
+  animation: glowFade 0.8s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes glowFade {
+  from {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+}
 </style>
 </head>
 
@@ -325,6 +347,7 @@ body {
 </section>
   
 <script>
+  
   
 const slides = document.querySelectorAll(".slide");
 let current = 0;
@@ -407,6 +430,21 @@ function createScrollDust(){
   }, 3000);
 
 }
+  document.addEventListener("mousemove", (e) => {
+
+  const glow = document.createElement("div");
+  glow.className = "cursor-glow";
+
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+
+  document.body.appendChild(glow);
+
+  setTimeout(() => {
+    glow.remove();
+  }, 800);
+
+});
   </script>
 </body>
 </html>
