@@ -233,6 +233,16 @@ transition:transform 1.5s ease;
 transform:rotateX(3deg);
 }
 
+/* подпись под отрывком */
+
+.excerpt-note{
+margin-top:40px;
+font-size:16px;
+letter-spacing:0.14em;
+opacity:0.6;
+font-style:italic;
+}
+
 /* частицы */
 
 .sparkle,.gold-particle{
@@ -250,43 +260,6 @@ from{transform:translateY(0);opacity:1;}
 to{transform:translateY(-120px);opacity:0;}
 }
 
-/* пыль при скролле */
-
-.scroll-dust{
-position:fixed;
-width:5px;
-height:5px;
-background:radial-gradient(circle,gold 0%,transparent 70%);
-border-radius:50%;
-pointer-events:none;
-animation:dustFloat 3s ease-out forwards;
-z-index:999;
-}
-
-@keyframes dustFloat{
-from{transform:translateY(0) scale(1);opacity:1;}
-to{transform:translateY(-120px) scale(.4);opacity:0;}
-}
-
-/* свечение курсора */
-
-.cursor-glow{
-position:fixed;
-width:12px;
-height:12px;
-pointer-events:none;
-border-radius:50%;
-background:radial-gradient(circle,rgba(255,220,140,.8) 0%,rgba(255,220,140,0) 70%);
-transform:translate(-50%,-50%);
-animation:glowFade .8s ease-out forwards;
-z-index:9999;
-}
-
-@keyframes glowFade{
-from{opacity:.9;transform:translate(-50%,-50%) scale(1);}
-to{opacity:0;transform:translate(-50%,-50%) scale(2.5);}
-}
-
 /* финальный текст */
 
 .final-light-text{
@@ -294,14 +267,20 @@ position:fixed;
 left:50%;
 top:50%;
 transform:translate(-50%,-50%);
-font-size:clamp(28px,3vw,42px);
-letter-spacing:.12em;
+font-size:clamp(24px,2.2vw,36px);
+letter-spacing:0.18em;
+line-height:1.8;
 text-align:center;
 pointer-events:none;
 opacity:0;
 z-index:9999;
-text-shadow:0 0 25px rgba(255,220,150,.6);
+color:#d6b66a;
+text-shadow:
+0 0 8px rgba(255,215,140,0.6),
+0 0 18px rgba(255,215,140,0.35),
+0 0 40px rgba(255,215,140,0.2);
 white-space:pre-line;
+padding:40px 80px;
 }
 
 .final-light-text.show{
@@ -312,29 +291,14 @@ transition:opacity 1.2s ease;
 .light-letter{
 opacity:0;
 display:inline-block;
-animation:letterAppear .8s ease forwards;
-filter:drop-shadow(0 0 6px rgba(255,215,140,.6));
+font-weight:500;
+animation:letterAppear .9s ease forwards;
+filter:drop-shadow(0 0 4px rgba(255,215,140,.5));
 }
 
 @keyframes letterAppear{
 from{opacity:0;transform:translateY(10px);}
 to{opacity:1;transform:translateY(0);}
-}
-
-.light-dust{
-position:fixed;
-width:5px;
-height:5px;
-background:radial-gradient(circle,gold 0%,transparent 70%);
-border-radius:50%;
-pointer-events:none;
-animation:lightDustFloat 3s ease forwards;
-z-index:9999;
-}
-
-@keyframes lightDustFloat{
-from{transform:translateY(0) scale(1);opacity:1;}
-to{transform:translateY(-120px) scale(.4);opacity:0;}
 }
 
 </style>
@@ -403,120 +367,21 @@ to{transform:translateY(-120px) scale(.4);opacity:0;}
 <p>И когда мир стал тише — начался её путь.</p>
 
 </div>
+
+<div class="excerpt-note">
+Читать первую главу полностью — в PDF версии книги
 </div>
 
+</div>
 </div>
 </section>
 
 <script>
 
-/* slider */
-
-const slides=document.querySelectorAll(".slide")
-let current=0
-let isAnimating=false
-
-function nextSlide(){
-
-if(isAnimating)return
-isAnimating=true
-
-const currentSlide=slides[current]
-const nextIndex=(current+1)%slides.length
-const upcomingSlide=slides[nextIndex]
-
-currentSlide.classList.add("flip")
-
-setTimeout(()=>{
-
-currentSlide.classList.remove("active","flip")
-upcomingSlide.classList.add("active")
-
-current=nextIndex
-isAnimating=false
-
-setTimeout(nextSlide,7000)
-
-},2000)
-}
-
-setTimeout(nextSlide,7000)
-
-function scrollToAbout(){
-document.getElementById("about").scrollIntoView({behavior:"smooth"})
-}
-
-function goDeeper(){
-window.location.href="rooms/index.html"
-}
-
-function goBuy(){
-window.location.href="buy.html"
-}
-
-/* excerpt */
-
 function toggleExcerpt(){
-
 const wrapper=document.getElementById("excerptWrapper")
 wrapper.classList.toggle("open")
-createGoldDust()
 }
-
-function createGoldDust(){
-
-const container=document.querySelector(".excerpt-inner")
-
-for(let i=0;i<12;i++){
-
-const dust=document.createElement("div")
-dust.className="gold-particle"
-dust.style.left=Math.random()*100+"%"
-dust.style.bottom="40px"
-
-container.appendChild(dust)
-
-setTimeout(()=>dust.remove(),2000)
-
-}
-}
-
-/* scroll dust */
-
-window.addEventListener("scroll",createScrollDust)
-
-function createScrollDust(){
-
-if(Math.random()>0.25)return
-
-const dust=document.createElement("div")
-
-dust.className="scroll-dust"
-
-dust.style.left=Math.random()*window.innerWidth+"px"
-dust.style.top=window.scrollY+window.innerHeight*Math.random()+"px"
-
-document.body.appendChild(dust)
-
-setTimeout(()=>dust.remove(),3000)
-}
-
-/* cursor glow */
-
-document.addEventListener("mousemove",(e)=>{
-
-const glow=document.createElement("div")
-
-glow.className="cursor-glow"
-glow.style.left=e.clientX+"px"
-glow.style.top=e.clientY+"px"
-
-document.body.appendChild(glow)
-
-setTimeout(()=>glow.remove(),800)
-})
-
-/* финальный текст */
 
 let finalShown=false
 
@@ -560,32 +425,7 @@ container.appendChild(span)
 
 delay+=0.05
 
-createLetterDust()
-
 }
-
-setTimeout(()=>{
-
-container.style.opacity=0
-
-setTimeout(()=>container.remove(),2000)
-
-},7000)
-
-}
-
-function createLetterDust(){
-
-const dust=document.createElement("div")
-
-dust.className="light-dust"
-
-dust.style.left=Math.random()*window.innerWidth+"px"
-dust.style.top=window.innerHeight*0.6+Math.random()*120+"px"
-
-document.body.appendChild(dust)
-
-setTimeout(()=>dust.remove(),3000)
 
 }
 
