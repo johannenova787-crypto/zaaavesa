@@ -333,6 +333,75 @@ transform: translate(-50%, -50%) scale(2.5);
 
 }
 
+  /* Финальная фраза */
+
+.final-light-text {
+position: fixed;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+font-size: clamp(28px, 3vw, 42px);
+letter-spacing: 0.12em;
+
+
+
+
+
+
+
+
+  
+text-align: center;
+pointer-events: none;
+opacity: 0;
+z-index: 9999;
+text-shadow: 0 0 25px rgba(255,220,150,0.6);
+}
+
+.final-light-text.show {
+opacity: 1;
+transition: opacity 1.2s ease;
+}
+
+.light-letter {
+opacity: 0;
+display: inline-block;
+animation: letterAppear 0.6s ease forwards;
+}
+
+@keyframes letterAppear {
+from {
+opacity: 0;
+transform: translateY(10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.light-dust {
+position: fixed;
+width: 5px;
+height: 5px;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+border-radius: 50%;
+pointer-events: none;
+animation: lightDustFloat 3s ease forwards;
+z-index: 9999;
+}
+
+@keyframes lightDustFloat {
+from {
+transform: translateY(0) scale(1);
+opacity: 1;
+}
+to {
+transform: translateY(-120px) scale(0.4);
+opacity: 0;
+}
+}
+  
 </style>
 
 </head>
@@ -567,7 +636,81 @@ glow.remove();
 }, 800);
 
 });
+/* Финальная фраза света */
 
+let finalShown = false;
+
+window.addEventListener("scroll", () => {
+
+if(finalShown) return;
+
+const scrollPosition = window.innerHeight + window.scrollY;
+const pageHeight = document.body.offsetHeight;
+
+if(scrollPosition >= pageHeight - 5){
+
+finalShown = true;
+
+showFinalLightText();
+
+}
+
+});
+
+function showFinalLightText(){
+
+const text = "Она не несла Свет. Она жила как Свет";
+
+const container = document.createElement("div");
+container.className = "final-light-text";
+document.body.appendChild(container);
+
+container.classList.add("show");
+
+let delay = 0;
+
+for(let char of text){
+
+const span = document.createElement("span");
+
+span.className = "light-letter";
+span.textContent = char;
+
+span.style.animationDelay = delay + "s";
+
+container.appendChild(span);
+
+delay += 0.05;
+
+createLetterDust();
+
+}
+
+setTimeout(()=>{
+
+container.style.opacity = 0;
+
+setTimeout(()=>container.remove(),2000);
+
+},7000);
+
+}
+
+function createLetterDust(){
+
+const dust = document.createElement("div");
+
+dust.className = "light-dust";
+
+dust.style.left = Math.random()*window.innerWidth + "px";
+dust.style.top = window.innerHeight * 0.6 + Math.random()*120 + "px";
+
+document.body.appendChild(dust);
+
+setTimeout(()=>dust.remove(),3000);
+
+}
+  
 </script>
 
 </body>
