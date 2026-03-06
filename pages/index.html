@@ -137,15 +137,23 @@ position: fixed;
 left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
-font-size: clamp(28px, 3vw, 42px);
-letter-spacing: 0.12em;
-color:#e6c777; /* ← ЭТО ИСПРАВЛЕНИЕ */
+font-size: clamp(22px, 2.2vw, 34px);
+letter-spacing: 0.18em;
 text-align: center;
 pointer-events: none;
 opacity: 0;
 z-index: 9999;
-text-shadow: 0 0 25px rgba(255,220,150,0.6);
+
+color: #f4d28a;
+
+text-shadow:
+0 0 6px rgba(255,220,140,0.6),
+0 0 14px rgba(255,210,120,0.5),
+0 0 26px rgba(255,200,100,0.35);
+
+font-weight: 400;
 }
+  
 
 .final-light-text.show {
 opacity: 1;
@@ -155,7 +163,8 @@ transition: opacity 1.2s ease;
 .light-letter {
 opacity: 0;
 display: inline-block;
-animation: letterAppear 0.6s ease forwards;
+animation: letterAppear 0.8s ease forwards;
+filter: drop-shadow(0 0 6px rgba(255,215,140,0.6));
 }
 
 @keyframes letterAppear {
