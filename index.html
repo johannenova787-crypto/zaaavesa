@@ -1,196 +1,576 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Завеса в Мир Эни</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<title>Эни — Акт I</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+
 html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Cormorant Garamond', serif;
-  background: radial-gradient(circle at top, #fffaf2, #f1e4cc);
-  transition: opacity 2.5s ease;
+margin: 0;
+padding: 0;
+font-family: 'Cormorant Garamond', serif;
+color: #5a4723;
+overflow-x: hidden;
+scroll-behavior: smooth;
+background: radial-gradient(circle at 50% 0%, #fffdf9, #f2e6cf);
+background-size: 120% 120%;
+animation: goldenBreath 18s ease-in-out infinite;
 }
 
-/* Контейнер */
-.veil-container {
-  position: relative;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@keyframes goldenBreath {
+
+0% {
+background-position: 50% 0%;
 }
 
-/* Частицы */
-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+50% {
+background-position: 52% 6%;
 }
 
-/* Завеса */
-.veil {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0.5),
-    rgba(255,225,170,0.3),
-    rgba(255,255,255,0.5)
-  );
-  animation: veilFlow 18s ease-in-out infinite;
-  z-index: 2;
-  transition: transform 3s ease, opacity 3s ease;
+100% {
+background-position: 50% 0%;
 }
 
-.veil.open {
-  transform: scaleX(0);
-  opacity: 0;
 }
 
-@keyframes veilFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Плавное появление */
+
+body {
+opacity: 0;
+animation: fadeIn 2.5s ease forwards;
 }
 
-/* Центр */
-.portal {
-  position: relative;
-  z-index: 3;
-  text-align: center;
-  padding: 20px;
+@keyframes fadeIn {
+
+to {
+opacity: 1;
 }
 
-.portal-title {
-  font-size: clamp(48px, 6vw, 82px);
-  letter-spacing: 0.14em;
-  color: #c6a048;
-  text-shadow:
-    0 0 12px rgba(255,215,150,0.45),
-    0 0 26px rgba(255,200,120,0.35);
-  margin-bottom: 36px;
 }
 
-.whisper {
-  font-size: 24px;
-  margin-top: 24px;
-  letter-spacing: 0.12em;
-  color: rgba(150,120,70,0.85);
-  opacity: 0;
-  animation: appear 6s ease forwards;
-  animation-delay: 2s;
+/* HERO */
+
+.hero {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 40px 20px;
 }
 
-@keyframes appear {
-  to { opacity: 1; }
+.title {
+font-size: clamp(64px, 6vw, 96px);
+letter-spacing: 0.14em;
+font-weight: 600;
+color: #c6a048;
+text-shadow: 0 0 30px rgba(255,215,150,0.4);
+margin-bottom: 20px;
 }
 
-.open-button {
-  font-size: 22px;
-  letter-spacing: 0.18em;
-  padding: 16px 42px;
-  border-radius: 60px;
-  border: 1px solid rgba(190,150,80,0.6);
-  background: rgba(255,245,220,0.75);
-  color: #8c6b2a;
-  cursor: pointer;
-  transition: all 0.6s ease;
+.subtitle {
+font-size: 24px;
+letter-spacing: 0.25em;
+opacity: 0.7;
+margin-bottom: 80px;
 }
 
-.open-button:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 30px rgba(255,220,160,0.6);
+/* Слайдер */
+
+.slider {
+width: 420px;
+aspect-ratio: 2/3;
+position: relative;
+perspective: 1200px;
+margin-bottom: 60px;
 }
+
+.slide {
+width: 100%;
+height: 100%;
+position: absolute;
+border-radius: 28px;
+overflow: hidden;
+box-shadow: 0 30px 80px rgba(180,140,60,0.35);
+backface-visibility: hidden;
+transform-origin: left;
+transition: transform 2s ease, opacity 2s ease;
+}
+
+.slide img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.slide.active {
+z-index: 2;
+}
+
+.slide.flip {
+transform: rotateY(-180deg);
+opacity: 0;
+}
+
+/* Кнопки */
+
+.buttons {
+display: flex;
+gap: 40px;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.button {
+font-size: 18px;
+letter-spacing: 0.18em;
+padding: 16px 46px;
+border-radius: 60px;
+border: 1px solid rgba(190,150,80,0.5);
+background: rgba(255,248,230,0.9);
+color: #8c6b2a;
+cursor: pointer;
+transition: all 0.6s ease;
+}
+
+.button:hover {
+transform: scale(1.07);
+box-shadow: 0 0 40px rgba(255,220,160,0.6);
+}
+
+/* О книге */
+
+.about-book {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 80px 20px;
+background: linear-gradient(to bottom, #f2e6cf, #fffdf9);
+}
+
+.about-inner {
+max-width: 900px;
+text-align: center;
+}
+
+.about-title {
+font-size: 48px;
+letter-spacing: 0.15em;
+margin-bottom: 40px;
+color: #b98a2d;
+}
+
+.about-book p {
+font-size: 22px;
+line-height: 1.9;
+margin-bottom: 30px;
+opacity: 0.85;
+}
+
+.about-meta {
+margin-top: 50px;
+font-size: 18px;
+opacity: 0.7;
+line-height: 1.8;
+}
+
+/* Блок отрывка */
+
+.excerpt-section {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+background: linear-gradient(to bottom, #fffdf9, #f7ecd8);
+padding: 120px 20px;
+}
+
+.excerpt-inner {
+max-width: 800px;
+text-align: center;
+position: relative;
+}
+
+.excerpt-title {
+font-size: 48px;
+letter-spacing: 0.15em;
+margin-bottom: 50px;
+color: #b98a2d;
+}
+
+.excerpt-toggle {
+font-size: 18px;
+letter-spacing: 0.2em;
+padding: 14px 40px;
+border-radius: 60px;
+border: 1px solid rgba(190,150,80,0.5);
+background: rgba(255,248,230,0.9);
+color: #8c6b2a;
+cursor: pointer;
+transition: all 0.6s ease;
+}
+
+.excerpt-toggle:hover {
+box-shadow: 0 0 30px rgba(255,215,140,0.6);
+transform: scale(1.05);
+}
+
+.excerpt-wrapper {
+max-height: 0;
+overflow: hidden;
+transition: max-height 1.8s ease, opacity 1.4s ease;
+opacity: 0;
+margin-top: 0;
+}
+
+.excerpt-wrapper.open {
+max-height: 800px;
+opacity: 1;
+margin-top: 60px;
+}
+
+.excerpt-text {
+font-size: 22px;
+line-height: 1.9;
+padding: 40px;
+border-radius: 20px;
+background: rgba(255,255,255,0.6);
+box-shadow: 0 0 40px rgba(210,170,90,0.2);
+transform-origin: top center;
+transition: transform 1.5s ease;
+}
+
+.excerpt-wrapper.open .excerpt-text {
+transform: rotateX(3deg);
+}
+
+/* Золотая пыль */
+
+.sparkle,
+.gold-particle {
+position: absolute;
+width: 6px;
+height: 6px;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+border-radius: 50%;
+pointer-events: none;
+animation: float 2s ease forwards;
+}
+
+@keyframes float {
+
+from {
+transform: translateY(0);
+opacity: 1;
+}
+
+to {
+transform: translateY(-120px);
+opacity: 0;
+}
+
+}
+
+/* Пыль при прокрутке */
+
+.scroll-dust {
+position: fixed;
+width: 5px;
+height: 5px;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+border-radius: 50%;
+pointer-events: none;
+animation: dustFloat 3s ease-out forwards;
+z-index: 999;
+}
+
+@keyframes dustFloat {
+
+from {
+transform: translateY(0) scale(1);
+opacity: 1;
+}
+
+to {
+transform: translateY(-120px) scale(0.4);
+opacity: 0;
+}
+
+}
+
+.cursor-glow {
+position: fixed;
+width: 12px;
+height: 12px;
+pointer-events: none;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,220,140,0.8) 0%, rgba(255,220,140,0) 70%);
+transform: translate(-50%, -50%);
+animation: glowFade 0.8s ease-out forwards;
+z-index: 9999;
+}
+
+@keyframes glowFade {
+
+from {
+opacity: 0.9;
+transform: translate(-50%, -50%) scale(1);
+}
+
+to {
+opacity: 0;
+transform: translate(-50%, -50%) scale(2.5);
+}
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<audio id="veilSound" src="sound/veil.mp3" preload="auto"></audio>
+<section class="hero">
 
-<div class="veil-container">
-  <canvas id="particles"></canvas>
-  <div class="veil" id="veil"></div>
+<div class="title">Эни</div>
 
-  <div class="portal">
-    <div class="portal-title">Завеса в Мир Эни</div>
-    <button class="open-button" onclick="openVeil()">Открыть</button>
-    <div class="whisper">
-      Пусть звучит и раскрывается,<br>
-      где бы ты ни был…
-    </div>
-  </div>
+<div class="subtitle">
+Акт I — Сквозь Тени
 </div>
 
+<div class="slider" id="slider">
+
+<div class="slide active">
+<img src="covers/cover1.jpg">
+</div>
+
+<div class="slide">
+<img src="covers/cover2.jpg">
+</div>
+
+<div class="slide">
+<img src="covers/cover3.jpg">
+</div>
+
+<div class="slide">
+<img src="covers/cover4.jpg">
+</div>
+
+<div class="slide">
+<img src="covers/cover5.jpg">
+</div>
+
+<div class="slide">
+<img src="covers/cover6.jpg">
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="button" onclick="scrollToAbout()">
+О книге
+</button>
+
+<button class="button" onclick="goDeeper()">
+Нырнуть глубже
+</button>
+
+<button class="button" onclick="goBuy()">
+Взять книгу с собой
+</button>
+
+</div>
+
+</section>
+
+<section class="about-book" id="about">
+
+<div class="about-inner">
+
+<div class="about-title">
+О книге
+</div>
+
+<p>
+«Эни. Акт I — Сквозь Тени» — история о границе между светом и тем, что остаётся за пределами видимого.
+</p>
+
+<p>
+Здесь тени — не враги. Они память, глубина, отражение.
+</p>
+
+<div class="about-meta">
+Жанр: мистическая проза<br>
+Формат: цифровая книга (PDF)<br>
+Объём: 121 страница
+</div>
+
+</div>
+
+</section>
+
+<section class="excerpt-section">
+
+<div class="excerpt-inner">
+
+<div class="excerpt-title">
+Бесплатный отрывок
+</div>
+
+<button class="excerpt-toggle" onclick="toggleExcerpt()">
+Развернуть фрагмент
+</button>
+
+<div class="excerpt-wrapper" id="excerptWrapper">
+
+<div class="excerpt-text">
+
+<p>
+Она чувствовала дыхание теней. Они не были пустыми. Они ждали.
+</p>
+
+<p>
+И когда мир стал тише — начался её путь.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 <script>
-/* Открытие завесы */
-function openVeil() {
-  const sound = document.getElementById('veilSound');
-  const veil = document.getElementById('veil');
 
-  sound.volume = 0.7;
-  sound.play();
+const slides = document.querySelectorAll(".slide");
+let current = 0;
+let isAnimating = false;
 
-  veil.classList.add('open');
+function nextSlide(){
 
-  setTimeout(() => {
-    document.body.style.opacity = "0";
-  }, 2500);
+if (isAnimating) return;
 
-  setTimeout(() => {
-    window.location.href  = "johanne.html";
-  }, 4500);
+isAnimating = true;
+
+const currentSlide = slides[current];
+const nextIndex = (current + 1) % slides.length;
+const upcomingSlide = slides[nextIndex];
+
+currentSlide.classList.add("flip");
+
+setTimeout(() => {
+
+currentSlide.classList.remove("active","flip");
+upcomingSlide.classList.add("active");
+
+current = nextIndex;
+isAnimating = false;
+
+setTimeout(nextSlide, 7000);
+
+}, 2000);
+
 }
 
-/* Частицы */
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
+setTimeout(nextSlide, 7000);
 
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-let particles = [];
-for (let i = 0; i < 110; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 1.6 + 0.6,
-    v: Math.random() * 0.25 + 0.08,
-    a: Math.random() * Math.PI * 2
-  });
+function scrollToAbout(){
+document.getElementById("about").scrollIntoView({behavior:"smooth"});
 }
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    p.y -= p.v;
-    p.a += 0.01;
-    if (p.y < -10) p.y = canvas.height + 10;
-
-    ctx.beginPath();
-    ctx.fillStyle = "rgba(215,175,95,0.65)";
-    ctx.arc(p.x + Math.sin(p.a)*4, p.y, p.r, 0, Math.PI*2);
-    ctx.fill();
-  });
-  requestAnimationFrame(draw);
+function goDeeper(){
+window.location.href = "rooms/index.html";
 }
-draw();
+
+function goBuy(){
+window.location.href = "buy.html";
+}
+
+function toggleExcerpt(){
+
+const wrapper = document.getElementById("excerptWrapper");
+wrapper.classList.toggle("open");
+
+createGoldDust();
+
+}
+
+function createGoldDust(){
+
+const container = document.querySelector(".excerpt-inner");
+
+for(let i=0;i<12;i++){
+
+const dust = document.createElement("div");
+
+dust.className="gold-particle";
+dust.style.left=Math.random()*100+"%";
+dust.style.bottom="40px";
+
+container.appendChild(dust);
+
+setTimeout(()=>dust.remove(),2000);
+
+}
+
+}
+
+/* Пыль при прокрутке страницы */
+
+window.addEventListener("scroll", createScrollDust);
+
+function createScrollDust(){
+
+if(Math.random() > 0.25) return;
+
+const dust = document.createElement("div");
+
+dust.className = "scroll-dust";
+dust.style.left = Math.random() * window.innerWidth + "px";
+dust.style.top = window.scrollY + window.innerHeight * Math.random() + "px";
+
+document.body.appendChild(dust);
+
+setTimeout(() => {
+
+dust.remove();
+
+}, 3000);
+
+}
+
+document.addEventListener("mousemove", (e) => {
+
+const glow = document.createElement("div");
+
+glow.className = "cursor-glow";
+glow.style.left = e.clientX + "px";
+glow.style.top = e.clientY + "px";
+
+document.body.appendChild(glow);
+
+setTimeout(() => {
+
+glow.remove();
+
+}, 800);
+
+});
+
 </script>
 
 </body>
 </html>
-
-
 
 
